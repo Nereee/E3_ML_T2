@@ -476,26 +476,22 @@ section .menu img{
 
 /* HASI SAIOA */
 
-/* Body guztian arial letra mota eta argazki bat fondo bezala */
-.hasisaioa{
-    font-family: 'Nunito', sans-serif;
-    margin: 0%;
-    padding: 0%;
-    box-sizing: border-box;
-}
 
 
 /* Formularioa eta kutxaren sorkuntza */
 .formularioaH {
-  width: 400px;
+  font-family: 'Nunito', sans-serif;
+  width: 350px;
   height: 340px;
   background: rgb(2, 2, 95);
   margin: auto;
-  margin-top: 250px;
+  margin-top: 100px;
   box-shadow: 7px 13px 37px rgb(2, 2, 95);
   padding: 20px 30px;
   border-top:  rgb(22, 22, 255);
   color: rgb(22, 22, 255);
+  margin-bottom: 100px;
+  box-sizing: border-box;
 }
 
 /* Formularioan tituluaren estiloa aldatzeko */
@@ -547,4 +543,3 @@ section .menu img{
 .formularioaH p:hover {
     text-decoration: underline;
 }
-

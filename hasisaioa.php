@@ -5,9 +5,9 @@
 <head>
     <title>Elorrieta zinema</title>
     <meta name="keywords" content="Elorrieta zinema, zinema, filmak, erreserbak, pelikulak">
-    <meta name="author" content="Summer bath">
+    <meta name="author" content="HAPA">
     <meta name="description"
-        content="Elorrieta zinemaren webgunea. Hurrengo HTMLa Matrillu-gatik eginda dago zinema baterako.">
+        content="Hasi saioa orria">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="favicon-16x16.png" type="image/x-icon">
@@ -44,65 +44,32 @@
                 <li><a href="erreserbak.html">Erreserbak</a></li>
                 <li><a href="hasisaioa.html">Hasi saioa </a></li>
                 <li><a href="#">Erregistratu</a></li>
+
             </ul>
         </div>
     </nav>
 
 
     <hr>
+<body>
+    <!-- Formularioaren sorkuntza, textu kutxak sortzeko eta bertan idazteko -->
+    <section class="formularioaH">
+    <h5>Saio hasiera</h5>
+    <form id="botoia" action="#" method="post">
+    <!-- Gmail-a idazteko -->
+    <input class="control" type="text" name="Gmail" value="" placeholder="Idatzi zure gmail">
+    <!-- Pasahitza idazteko, idazten dena ez da ikusiko (puntuak agertzen dira) -->
+    <input class="control" type="password" name="pasahitza" value="" placeholder="Pasahitza">
+    <!-- Botoi bat egiteko -->
+
+    <a href="#" class="botoia-link" onclick="document.getElementById('botoia').submit(); return false;"></a>
 
 
-    <section>
-        <div class="containererresrba">
-            <h1>Zinema aretoen zerrenda</h1>
-            <p class="lehenletrabeltz">Guk ez dugunez zinemen erreserbak kudeatzea, emen dituzu zinemen zerrenda batzuk:</p>
-            <nav class="menua">
-                <div class="zubiarte">
-                    <ul>
-                        <li>
-                            <a href="erreserbak.html">Cinesa Zubiarte <i class="fa-solid fa-arrow-down-wide-short"></i></a>
-                            <ul>
-                                <li><a href="https://www.cinesa.es/cines/zubiarte/" target="_blank">Erosi sarrera</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div class="maxocio">
-                    <ul>
-                        <li>
-                            <a href="erreserbak.html">Cinesa Max Ocio <i class="fa-solid fa-arrow-down-wide-short"></i></a>
-                            <ul>
-                                <li><a href="https://www.cinesa.es/cines/max-ocio/" target="_blank">Erosi sarrera</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div class="golem">
-                    <ul>
-                        <li>
-                            <a href="erreserbak.html">Golem Alhóndiga <i class="fa-solid fa-arrow-down-wide-short"></i></a>
-                            <ul>
-                                <li><a href="https://www.golem.es/golem/golem-alhondiga" target="_blank">Erosi sarrera</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div class="artea">
-                    <ul>
-                        <li>
-                            <a href="erreserbak.html">Cine Yelmo Premium Artea <i class="fa-solid fa-arrow-down-wide-short"></i></a>
-                            <ul>
-                                <li><a href="https://www.yelmocines.es/cartelera/vizcaya/artea" target="_blank">Erosi sarrera</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            <img src="zinema_aretoa.webp" alt="zinema aretoa" height="400" width="550">
-        </div>
+    <input class="botoia" type="submit" name="botoia" value="Jarraitu">
+    </form>
+
+    <p><a href="#"><b>Ez dut pasahitza gogoratzen</b></a></p>
     </section>
-
-
     <footer>
         <div class="container3">
             <div class="info-footer">
@@ -138,6 +105,4 @@
         </div>
     </footer>
 </body>
-
-
 </html>
