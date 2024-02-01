@@ -42,7 +42,7 @@
                 <li><a href="zientziafikzioa.html">Zientzia Fikzioa</a></li>
                 <li><a href="komedia.html">Komedia</a></li>
                 <li><a href="erreserbak.html">Erreserbak</a></li>
-                <li><a href="hasisaioa.html">Hasi saioa </a></li>
+                <li><a href="hasisaioa.php">Hasi saioa </a></li>
                 <li><a href="#">Erregistratu</a></li>
 
             </ul>
