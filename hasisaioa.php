@@ -1,13 +1,33 @@
 <!DOCTYPE html>
 <html lang="eu">
 
+<?php
+include 'conexion.php';
 
+function konprobatu()
+{
+    $usuario = $_POST["fname"];
+    $password = $_POST["fpassword"];
+    // Kontsulta prestatu. Literal bat sortzen dut
+    $sql= "SELECT * FROM Bezero WHERE izena='$usuario' AND pasahitza='$password'";
+    // kontsulta exekutatu
+    $emaitza = $mysqli->query($sql);
+
+    // Datuak berreskuratu
+    if ($emaitza->num_rows > 0) {
+        // Kargatu behar da hurrengo dokumentua (tiketa.php) eta pasatu behar zaio erabiltzailearen id URL berdinean
+        header("Location: tiketa.php?user=$usuario");
+        exit;
+    } else {
+        echo "Erabiltzailea ez da zuzena";
+    }
+}
+?>
 <head>
     <title>Elorrieta zinema</title>
     <meta name="keywords" content="Elorrieta zinema, zinema, filmak, erreserbak, pelikulak">
     <meta name="author" content="HAPA">
-    <meta name="description"
-        content="Hasi saioa orria">
+    <meta name="description" content="Hasi saioa orria">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="favicon-16x16.png" type="image/x-icon">
@@ -15,7 +35,6 @@
     <script src="https://kit.fontawesome.com/9b73a90cb7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
 
 </head>
 
@@ -52,15 +71,11 @@
 
     <hr>
 <body>
-    <!-- Formularioaren sorkuntza, textu kutxak sortzeko eta bertan idazteko -->
     <section class="formularioaH">
     <h5>Saio hasiera</h5>
     <form id="botoia" action="#" method="post">
-    <!-- Gmail-a idazteko -->
-    <input class="control" type="text" name="Gmail" value="" placeholder="Idatzi zure gmail">
-    <!-- Pasahitza idazteko, idazten dena ez da ikusiko (puntuak agertzen dira) -->
-    <input class="control" type="password" name="pasahitza" value="" placeholder="Pasahitza">
-    <!-- Botoi bat egiteko -->
+    <input class="control" type="text" name="fname" value="" placeholder="Idatzi zure izena">
+    <input class="control" type="password" name="fpassword" value="" placeholder="Pasahitza">
 
     <a href="#" class="botoia-link" onclick="document.getElementById('botoia').submit(); return false;"></a>
 
