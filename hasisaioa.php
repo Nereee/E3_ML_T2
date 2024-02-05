@@ -2,20 +2,28 @@
 <html lang="eu">
 
 <?php
-include 'conexion.php';
+include 'PHP/conexion.php';
 
-function konprobatu()
+function konprobatulogin()
 {
     $usuario = $_POST["fname"];
     $password = $_POST["fpassword"];
-    // Kontsulta prestatu. Literal bat sortzen dut
-    $sql= "SELECT * FROM Bezero WHERE izena='$usuario' AND pasahitza='$password'";
-    // kontsulta exekutatu
+    // Establish database connection
+    $mysqli = new mysqli("localhost", "username", "password", "database_name");
+    
+    // Check if connection is successful
+    if ($mysqli->connect_errno) {
+        echo "Failed to connect to MySQL: " . $mysqli->connect_error;
+        exit;
+    }
+    
+    // Prepare and execute the query
+    $sql= "SELECT * FROM Bezero WHERE izena='$usuario' AND ='$password'";
     $emaitza = $mysqli->query($sql);
 
-    // Datuak berreskuratu
+    // Retrieve data
     if ($emaitza->num_rows > 0) {
-        // Kargatu behar da hurrengo dokumentua (tiketa.php) eta pasatu behar zaio erabiltzailearen id URL berdinean
+        // Load the next document (tiketa.php) and pass the user's id in the URL
         header("Location: tiketa.php?user=$usuario");
         exit;
     } else {
