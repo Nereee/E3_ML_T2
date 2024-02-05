@@ -1,24 +1,30 @@
 <!DOCTYPE html>
 <html lang="eu">
+<script>
+    function ZinemaIzena() {
+        var zinema =  document.getElementById("zinemak");
+        <?php
+        $sql = "SELECT izena FROM zinema";
+        $mysqli = new mysqli("127.0.0.1", "root", null, "db_zinema");
+        $result = $mysqli->query($sql);
 
-<?php
-include 'PHP/conexion.php';
-
-function konprobatulogin()
-{
-    $password = $_POST['password'];
-    $usuario = $_POST['usuario'];
-    $mysqli = new mysqli("127.0.0.1", "username", "password", "database_name");
-    $sql1= "SELECT izenburua FROM filma";
-    $sql2= "SELECT izena FROM zinema inner join Aretoa using idzinema where (select izena from saioa where)";
-}
+        while ($row = $result->fetch_assoc()) {
+            ?>
+            var aukera = document.createElement("option");
+            aukera.value = "<?php echo $row['id']; ?>";
+            aukera.textContent = "<?php echo $row['izena']; ?>";
+            zinema.appendChild(aukera);
+            <?php
+        }
 ?>
+}
+</script>
 
 <head>
     <title>Elorrieta zinema</title>
     <meta name="keywords" content="Elorrieta zinema, zinema, filmak, erreserbak, pelikulak">
     <meta name="author" content="HAPA">
-    <meta name="description" content="Hasi saioa orria">
+    <meta name="description" content="Tiketaren erosketa">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="favicon-16x16.png" type="image/x-icon">
@@ -30,7 +36,8 @@ function konprobatulogin()
 </head>
 
 
-<body>
+<body onload="ZinemaIzena()">
+
     <header>
         <div class="container">
             <div class="logo">
@@ -64,12 +71,17 @@ function konprobatulogin()
 
     <body>
         <section class="formularioaH">
-            <h5>Saio hasiera</h5>
+            <h5>Tiketaren erosketa</h5>
             <form id="botoia" action="#" method="post">
-                
+                <label for="zinemak">Zinema:</label>
+                <select name="zinemak" id="zinemak">
+                    <label for="filma">Filma:</label>
+                    <select name="filma" id="filma">
+                        <label for="data">Data:</label>
+                        <input type="date" id="data" name="data">
+                        <label for="saioa">Saioa:</label>
+                        <select name="saioa" id="saioa">
             </form>
-
-            <p><a href="#"><b>Ez dut pasahitza gogoratzen</b></a></p>
         </section>
         <footer>
             <div class="container3">
