@@ -1,36 +1,40 @@
-<!DOCTYPE html>
-<html lang="eu">
-
 <?php
-include 'PHP/conexion.php';
 
-function konprobatulogin()
-{
-    $usuario = $_POST["fname"];
-    $password = $_POST["fpassword"];
-    // Establish database connection
-    $mysqli = new mysqli("localhost", "username", "password", "database_name");
-    
-    // Check if connection is successful
-    if ($mysqli->connect_errno) {
-        echo "Failed to connect to MySQL: " . $mysqli->connect_error;
-        exit;
-    }
+    // DATU BASEAREKIN KONEXIOA
+
+   // Konexioa sortu
+$mysqli = new mysqli("localhost", "root", "", "db_zinema");
+
+// Konexioa egiaztatu
+if ($mysqli->connect_error) {
+  die("Connection failed: " . $mysqli->connect_error);
+}
+if(isset($_POST['fname'])){
+
+	
+
+    $username = $_POST ["fname"];
+    $password = $_POST ["fpassword"];
     
     // Prepare and execute the query
-    $sql= "SELECT * FROM Bezero WHERE izena='$usuario' AND ='$password'";
-    $emaitza = $mysqli->query($sql);
+    $sql= "SELECT NAN FROM bezeroa WHERE erabiltzailea='$username' AND pasahitza ='$password'";
+    $result = $mysqli->query($sql);
+
+    
 
     // Retrieve data
-    if ($emaitza->num_rows > 0) {
-        // Load the next document (tiketa.php) and pass the user's id in the URL
+    if($result->num_rows > 0){
         header("Location: tiketa.php?user=$usuario");
-        exit;
     } else {
-        echo "Erabiltzailea ez da zuzena";
+        $erroremezua = "Erabiltzailea edo pasahitza ez da zuzena. Mesedez saiatu berriro.";
     }
 }
+
 ?>
+
+<!DOCTYPE html>
+<html lang="eu">
+    
 <head>
     <title>Elorrieta zinema</title>
     <meta name="keywords" content="Elorrieta zinema, zinema, filmak, erreserbak, pelikulak">
@@ -47,7 +51,7 @@ function konprobatulogin()
 </head>
 
 
-<body>
+<body onload="konprobatulogin()">
     <header>
         <div class="container">
             <div class="logo">
@@ -81,14 +85,14 @@ function konprobatulogin()
 <body>
     <section class="formularioaH">
     <h5>Saio hasiera</h5>
-    <form id="botoia" action="#" method="post">
-    <input class="control" type="text" name="fname" value="" placeholder="Idatzi zure izena">
-    <input class="control" type="password" name="fpassword" value="" placeholder="Pasahitza">
+    <form id="botoia" action="hasisaioa.php" method="post">
+            <input class="control" type="text" name="fname" value="" placeholder="Idatzi zure izena" required>
+            <input class="control" type="password" name="fpassword" value="" placeholder="Pasahitza" required>
 
-    <a href="#" class="botoia-link" onclick="document.getElementById('botoia').submit(); return false;"></a>
+            <!--<a href="#" class="botoia-link" onclick="document.getElementById('botoia').submit(); return false;"></a>-->
 
 
-    <input class="botoia" type="submit" name="botoia" value="Jarraitu">
+            <input class="botoia" type="submit" name="botoia" value="Jarraitu" >
     </form>
 
     <p><a href="#"><b>Ez dut pasahitza gogoratzen</b></a></p>
@@ -127,5 +131,15 @@ function konprobatulogin()
             </div>
         </div>
     </footer>
+
+    <script>
+        function konprobatulogin() {
+        <?php
+            if (isset($erroremezua)) {
+                echo 'alert("' . $erroremezua . '");';
+            }
+        ?>
+    }
+    </script>
 </body>
 </html>
