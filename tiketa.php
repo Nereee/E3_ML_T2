@@ -1,42 +1,6 @@
 <!DOCTYPE html>
 <html lang="eu">
-<script>
-    function ZinemaIzena() {
-        var zinema = document.getElementById("zinemak");
-        <?php
-        $sql = "SELECT izena FROM zinema";
-        $mysqli = new mysqli("127.0.0.1", "root", null, "db_zinema");
-        $result = $mysqli->query($sql);
 
-        while ($row = $result->fetch_assoc()) {
-        ?>
-            var aukera = document.createElement("option");
-            aukera.value = "<?php echo $row['id']; ?>";
-            aukera.textContent = "<?php echo $row['izena']; ?>";
-            zinema.appendChild(aukera);
-        <?php
-        }
-        ?>
-    }
-
-    function FilmaIzena() {
-        var zinema = document.getElementById("zinemak").value;
-        var filma = document.getElementById("filma");
-        <?php
-        $sql = "SELECT izena FROM filma WHERE idZinema = " . $row['id'];
-        $result = $mysqli->query($sql);
-
-        while ($row = $result->fetch_assoc()) {
-        ?>
-            var aukera = document.createElement("option");
-            aukera.value = "<?php echo $row['id']; ?>";
-            aukera.textContent = "<?php echo $row['izena']; ?>";
-            filma.appendChild(aukera);
-        <?php
-        }
-        ?>
-    }
-</script>
 
 <head>
     <title>Elorrieta zinema</title>
@@ -54,7 +18,7 @@
 </head>
 
 
-<body onload="ZinemaIzena()">
+<body>
 
     <header>
         <div class="container">
@@ -91,14 +55,22 @@
         <section class="formularioaH">
             <h5>Tiketaren erosketa</h5>
             <form id="botoia" action="#" method="post">
-                <label for="zinemak">Zinema:</label>
+                <label for="zinemak">Aukeratu zinema:</label>
                 <select name="zinemak" id="zinemak">
-                    <label for="filma">Filma:</label>
+</select>
+                    <br><br>
+                    <label for="filma">Aukeratu filma:</label>
                     <select name="filma" id="filma">
-                        <label for="data">Data:</label>
+                    </select>
+                        <br><br>
+                        <label for="data">Aukeratu data:</label>
                         <input type="date" id="data" name="data">
-                        <label for="saioa">Saioa:</label>
+                        <br><br>
+                        <label for="saioa">Aukeratu saioa:</label>
                         <select name="saioa" id="saioa">
+                        </select>
+                        <br><br>
+                        <input class="botoia" type="submit" name="botoia" value="Erosi" >
             </form>
         </section>
         <footer>
@@ -131,6 +103,44 @@
                 </div>
             </div>
         </footer>
+
+        <script>
+            function ZinemaIzena() {
+            var zinema = document.getElementById("zinemak");
+            <?php
+            $sql = "SELECT id, izena FROM zinema";
+            $mysqli = new mysqli("localhost", "root", "", "db_zinema");
+            $result = $mysqli->query($sql);
+
+            while ($row = $result->fetch_assoc()) {
+            ?>
+                var aukera = document.createElement("option");
+                aukera.value = "<?php echo $row['id']; ?>";
+                aukera.textContent = "<?php echo $row['izena']; ?>";
+                zinema.appendChild(aukera);
+            <?php
+            }
+            ?>
+        }
+
+        function FilmaIzena() {
+        var zinema = document.getElementById("zinemak").value;
+        var filma = document.getElementById("filma");
+        <?php
+        $sql = "SELECT izena FROM filma WHERE idZinema = " . $row['id'];
+        $result = $mysqli->query($sql);
+
+        while ($row = $result->fetch_assoc()) {
+        ?>
+            var aukera = document.createElement("option");
+            aukera.value = "<?php echo $row['id']; ?>";
+            aukera.textContent = "<?php echo $row['izena']; ?>";
+            filma.appendChild(aukera);
+        <?php
+            }
+            ?>
+        }
+            </script>
     </body>
 
 </html>

@@ -122,7 +122,6 @@ section .container2 .info p {
 
 footer .container3 {
     display: flex;
-    padding-left: 20px;
     background-color: rgb(2, 2, 77);
     justify-content: space-between;
 }
@@ -149,7 +148,7 @@ footer .kontaktua ul {
 
 
 footer .mapa {
-    padding-right: 30px;
+    padding-right: 50px;
     padding-bottom: 30px;
 }
 

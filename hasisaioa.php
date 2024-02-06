@@ -24,7 +24,7 @@ if(isset($_POST['fname'])){
 
     // Retrieve data
     if($result->num_rows > 0){
-        header("Location: tiketa.php?user=$usuario");
+        header("Location: tiketa.php?user=$username");
     } else {
         $erroremezua = "Erabiltzailea edo pasahitza ez da zuzena. Mesedez saiatu berriro.";
     }
