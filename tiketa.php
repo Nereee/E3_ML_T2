@@ -19,7 +19,7 @@
         function ZinemaIzena() {
             var zinema = document.getElementById("zinemak");
             <?php
-            $sql = "SELECT Idzinema, izena FROM zinema";
+            $sql = "SELECT Idzinema, izena FROM zinema where Idzinema < 6";
             $mysqli = new mysqli("localhost", "root", "", "db_zinema");
             $result = $mysqli->query($sql);
 
@@ -34,6 +34,28 @@
             ?>
         }
 
+        function FilmaIzena() {
+            alert("FilmaIzena");
+            var zinema = document.getElementById("zinemak").value;
+            var filma = document.getElementById("filma");
+            <?php
+            $sql = "SELECT distinct(Izenburua) 
+            FROM Filma
+            INNER JOIN Saioa USING (idfilma)
+            INNER JOIN Aretoa a ON Saioa.idaretoa = a.idaretoa
+            INNER JOIN zinema z ON a.idzinema = z.idzinema where z.idzinema = 3";
+            $result = $mysqli->query($sql);
+
+            while ($row = $result->fetch_assoc()) {
+            ?>
+                var aukera = document.createElement("option");
+                aukera.value = "<?php echo $row['Idfilma']; ?>";
+                aukera.textContent = "<?php echo $row['Izenburua']; ?>";
+                filma.appendChild(aukera);
+            <?php
+            }
+            ?>
+        }
     </script>
 </head>
 
@@ -73,7 +95,7 @@
         <h5>Tiketaren erosketa</h5>
         <form id="botoia" action="#" method="post">
             <label for="zinemak">Aukeratu zinema:</label>
-            <select name="zinemak" id="zinemak">
+            <select name="zinemak" id="zinemak" onchange="FilmaIzena()">
             </select>
             <br><br>
             <label for="filma">Aukeratu filma:</label>
