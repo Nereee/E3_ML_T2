@@ -2,22 +2,40 @@
 <html lang="eu">
 <script>
     function ZinemaIzena() {
-        var zinema =  document.getElementById("zinemak");
+        var zinema = document.getElementById("zinemak");
         <?php
         $sql = "SELECT izena FROM zinema";
         $mysqli = new mysqli("127.0.0.1", "root", null, "db_zinema");
         $result = $mysqli->query($sql);
 
         while ($row = $result->fetch_assoc()) {
-            ?>
+        ?>
             var aukera = document.createElement("option");
             aukera.value = "<?php echo $row['id']; ?>";
             aukera.textContent = "<?php echo $row['izena']; ?>";
             zinema.appendChild(aukera);
-            <?php
+        <?php
         }
-?>
-}
+        ?>
+    }
+
+    function FilmaIzena() {
+        var zinema = document.getElementById("zinemak").value;
+        var filma = document.getElementById("filma");
+        <?php
+        $sql = "SELECT izena FROM filma WHERE idZinema = " . $row['id'];
+        $result = $mysqli->query($sql);
+
+        while ($row = $result->fetch_assoc()) {
+        ?>
+            var aukera = document.createElement("option");
+            aukera.value = "<?php echo $row['id']; ?>";
+            aukera.textContent = "<?php echo $row['izena']; ?>";
+            filma.appendChild(aukera);
+        <?php
+        }
+        ?>
+    }
 </script>
 
 <head>
