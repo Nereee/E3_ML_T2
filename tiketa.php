@@ -39,7 +39,7 @@
             var zinema = document.getElementById("zinemak").value;
             var filma = document.getElementById("filma");
             <?php
-            $sql = "SELECT distinct(Izenburua) 
+            $sql = "SELECT distinct(Izenburua), Filma.Idfilma 
             FROM Filma
             INNER JOIN Saioa USING (idfilma)
             INNER JOIN Aretoa a ON Saioa.idaretoa = a.idaretoa
