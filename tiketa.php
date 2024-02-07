@@ -134,7 +134,7 @@
     <hr>
     <section class="formularioaH">
         <h5>Tiketaren erosketa</h5>
-        <form id="botoia" action="#" method="post">
+        <form id="botoia" action="erosketa.php" method="post">
             <label for="zinemak">Aukeratu zinema:</label>
             <select name="zinemak" id="zinemak" onchange="FilmaIzena()">
             </select>

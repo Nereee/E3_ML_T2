@@ -88,10 +88,6 @@ if(isset($_POST['fname'])){
     <form id="botoia" action="hasisaioa.php" method="post">
             <input class="control" type="text" name="fname" value="" placeholder="Idatzi zure izena" required>
             <input class="control" type="password" name="fpassword" value="" placeholder="Pasahitza" required>
-
-            <!--<a href="#" class="botoia-link" onclick="document.getElementById('botoia').submit(); return false;"></a>-->
-
-
             <input class="botoia" type="submit" name="botoia" value="Jarraitu" >
     </form>
 
