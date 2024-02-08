@@ -4,7 +4,6 @@ session_start();
 <!DOCTYPE html>
 <html lang="eu">
 
-
 <head>
     <title>Elorrieta zinema</title>
     <meta name="keywords" content="Elorrieta zinema, zinema, filmak, erreserbak, pelikulak">
@@ -23,18 +22,20 @@ session_start();
         function FilmaUrl() {
             var zinema = document.getElementById("zinemak").value;
             let patharray = window.location.href;
-            window.location = window.location.href + "&zinemak="+zinema;
+            window.location = window.location.href + "&zinemak=" + zinema;
 
         }
+
         function DataUrl() {
             var filma = document.getElementById("filma").value;
             let patharray = window.location.href;
-            window.location = window.location.href + "&filma="+filma;
+            window.location = window.location.href + "&filma=" + filma;
         }
+
         function SaioaUrl() {
             var data = document.getElementById("data").value;
             let patharray = window.location.href;
-            window.location = window.location.href + "&data="+data;
+            window.location = window.location.href + "&data=" + data;
         }
 
         function ZinemaIzena() {
@@ -49,7 +50,7 @@ session_start();
                 var aukera = document.createElement("option");
                 aukera.value = "<?php echo $row['Idzinema']; ?>";
                 aukera.textContent = "<?php echo $row['izena']; ?>";
-                aukera.style.color = "black"; 
+                aukera.style.color = "black";
                 zinema.appendChild(aukera);
             <?php
             }
@@ -57,11 +58,11 @@ session_start();
             <?php
             if (isset($_GET['zinemak'])) {
             ?>
-                
+
                 document.getElementById("zinemak").value = "<?php echo $_GET['zinemak']; ?>";
-                document.getElementById("zinemak").style.color = "black"; 
+                document.getElementById("zinemak").style.color = "black";
                 <?php
-    
+
                 $zinema = $_GET['zinemak'];
                 $sql = "SELECT distinct(Izenburua), Filma.Idfilma 
                 FROM Filma
@@ -74,14 +75,14 @@ session_start();
                     var aukera = document.createElement("option");
                     aukera.value = "<?php echo $row['Idfilma']; ?>";
                     aukera.textContent = "<?php echo $row['Izenburua']; ?>";
-                    aukera.style.color = "black"; 
+                    aukera.style.color = "black";
                     filma.appendChild(aukera);
                 <?php
                 }
                 if (isset($_GET['filma'])) {
                 ?>
                     document.getElementById("filma").value = "<?php echo $_GET['filma']; ?>";
-                    document.getElementById("filma").style.color = "black"; 
+                    document.getElementById("filma").style.color = "black";
                     <?php
                     $filma = $_GET['filma'];
                     $sql = "SELECT distinct(S_Data), idSaioa  
@@ -95,14 +96,14 @@ session_start();
                         var aukera = document.createElement("option");
                         aukera.value = "<?php echo $row['idSaioa']; ?>";
                         aukera.textContent = "<?php echo $row['S_Data']; ?>";
-                        aukera.style.color = "black"; 
+                        aukera.style.color = "black";
                         data.appendChild(aukera);
                     <?php
                     }
                     if (isset($_GET['data'])) {
                     ?>
                         document.getElementById("data").value = "<?php echo $_GET['data']; ?>";
-                        document.getElementById("data").aukera.style.color = "black"; 
+                        document.getElementById("data").aukera.style.color = "black";
                         <?php
                         $data = $_GET['data'];
                         $sql = "SELECT Ordu_Data, IdSaioa, S_Data
@@ -116,7 +117,7 @@ session_start();
                             var aukera = document.createElement("option");
                             aukera.value = "<?php echo $row['IdSaioa']; ?>";
                             aukera.textContent = "<?php echo $row['Ordu_Data']; ?>";
-                            aukera.style.color = "black"; 
+                            aukera.style.color = "black";
                             saioa.appendChild(aukera);
                         <?php
                         }
@@ -124,7 +125,7 @@ session_start();
                     if (isset($_GET['data'])) {
                         ?>
                         document.getElementById("data").value = "<?php echo $_GET['data']; ?>";
-                        document.getElementById("data").aukera.style.color = "black"; 
+                        document.getElementById("data").aukera.style.color = "black";
                         <?php
                         $data = $_GET['data'];
                         $sql = "SELECT Ordu_Data, IdSaioa, S_Data
@@ -134,82 +135,33 @@ session_start();
                         INNER JOIN zinema z ON a.idzinema = z.idzinema where z.idzinema = $zinema and idfilma = $filma and S_Data = $data";
                         $result = $mysqli->query($sql);
                         while ($row = $result->fetch_assoc()) {
-                            ?>
+                        ?>
                             var aukera = document.createElement("option");
                             aukera.value = "<?php echo $row['IdSaioa']; ?>";
                             aukera.textContent = "<?php echo $row['Ordu_Data']; ?>";
-                            aukera.style.color = "black"; 
+                            aukera.style.color = "black";
                             saioa.appendChild(aukera);
-                            <?php
+                        <?php
                         }
                     }
                 }
             }
             ?>
         }
-
-        function Data() {
-            var zinema = document.getElementById("zinemak").value;
-            var filma = document.getElementById("filma").value;
-            var data = document.getElementById("data");
-            <?php
-            $sql = "SELECT distinct(S_Data), idSaioa  
-            FROM Filma
-            INNER JOIN Saioa USING (idfilma)
-            INNER JOIN Aretoa a ON Saioa.idaretoa = a.idaretoa
-            INNER JOIN zinema z ON a.idzinema = z.idzinema where z.idzinema = 1 and idfilma = 1";
-            $result = $mysqli->query($sql);
-            while ($row = $result->fetch_assoc()) {
-            ?>
-                var aukera = document.createElement("option");
-                aukera.value = "<?php echo $row['idSaioa']; ?>";
-                aukera.textContent = "<?php echo $row['S_Data']; ?>";
-                aukera.style.color = "black"; 
-                data.appendChild(aukera);
-            <?php
-            }
-            ?>
-            
-        }
-
-        function Saioa() {
+        //TODO: Informazioaren bidalketa komprobazioa
+        function Bidali() {
+            alert("Erosketa burutu da");
             var zinema = document.getElementById("zinemak").value;
             var filma = document.getElementById("filma").value;
             var data = document.getElementById("data").value;
-            var saioa = document.getElementById("saioa");
-            <?php
-            $sql = "SELECT Ordu_Data, IdSaioa, S_Data
-            FROM Filma
-            INNER JOIN Saioa USING (idfilma)
-            INNER JOIN Aretoa a ON Saioa.idaretoa = a.idaretoa
-            INNER JOIN zinema z ON a.idzinema = z.idzinema where z.idzinema = 1 and idfilma = 1 and S_Data = 0000-00-00";
-            $result = $mysqli->query($sql);
-            while ($row = $result->fetch_assoc()) {
-            ?>
-                var aukera = document.createElement("option");
-                aukera.value = "<?php echo $row['IdSaioa']; ?>";
-                aukera.textContent = "<?php echo $row['Ordu_Data']; ?>";
-                aukera.style.color = "black"; 
-                saioa.appendChild(aukera);
-            <?php
-            }
-            ?>
-
-            //TODO: Informazioaren bidalketa komprobazioa
-            function Bidali() {
-                alert("Erosketa burutu da");
-                var zinema = document.getElementById("zinemak").value;
-                var filma = document.getElementById("filma").value;
-                var data = document.getElementById("data").value;
-                var saioa = document.getElementById("saioa").value;
-                if (zinema == "" || filma == "" || data == "" || saioa == "") {
-                    alert("Eremu guztiak bete behar dira");
-                } else {
-                    window.location.href = "erosketa.php?zinema=" + zinema + "&filma=" + filma + "&data=" + data + "&saioa=" + saioa;
-                }
+            var saioa = document.getElementById("saioa").value;
+            var kopurua = document.getElementById("kopurua").value;
+            if (zinema == "" || filma == "" || data == "" || saioa == "") {
+                alert("Eremu guztiak bete behar dira");
+            } else {
+                window.location.href = "erosketa.php?zinema=" + zinema + "&filma=" + filma + "&data=" + data + "&saioa=" + saioa + "&kopurua=" + kopurua;
             }
         }
-      
     </script>
 </head>
 
@@ -263,6 +215,9 @@ session_start();
             <label for="saioa">Aukeratu saioa:</label>
             <select name="saioa" id="saioa">
             </select>
+            <br><br>
+            <label for="kopurua">Sartu kopurua:</label>
+            <input type="number" id="kopurua" name="kopurua" min="1" value="1" style="color: black">
             <br><br>
             <input class="botoia" type="submit" name="botoia" value="Erosi" onclick="Bidali()">
         </form>
