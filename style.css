@@ -493,6 +493,10 @@ section .menu img{
   box-sizing: border-box;
 }
 
+#zinemak option{
+    color: black;
+}
+
 /* Formularioan tituluaren estiloa aldatzeko */
 .formularioaH h5 {
     margin: 0%;

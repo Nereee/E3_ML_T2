@@ -17,6 +17,7 @@ session_start();
     <script src="https://kit.fontawesome.com/9b73a90cb7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI/t1qEzW9Xp8hYK3GIvGz8Nszptr5S9ZBvTqUfM=" crossorigin="anonymous"></script>
 
     <script>
         function FilmaUrl() {
@@ -38,6 +39,7 @@ session_start();
                 var aukera = document.createElement("option");
                 aukera.value = "<?php echo $row['Idzinema']; ?>";
                 aukera.textContent = "<?php echo $row['izena']; ?>";
+                aukera.style.color = "black"; 
                 zinema.appendChild(aukera);
             <?php
             }
@@ -147,6 +149,7 @@ session_start();
                 }
             }
         }
+      
     </script>
 </head>
 
