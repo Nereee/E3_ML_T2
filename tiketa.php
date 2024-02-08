@@ -219,7 +219,7 @@ session_start();
             <label for="kopurua">Sartu kopurua:</label>
             <input type="number" id="kopurua" name="kopurua" min="1" value="1" style="color: black">
             <br><br>
-            <input class="botoia" type="submit" name="botoia" value="Erosi" onclick="Bidali()">
+            <input class="botoia" type="submit" onclick="Bidali()">
         </form>
     </section>
     <footer>

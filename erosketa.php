@@ -18,7 +18,7 @@
 </head>
 
 
-<body>
+<body onload="obtenerParametrosUrl()">
 
     <header>
         <div class="container">
@@ -53,35 +53,30 @@
 
     <body>
     <section class="formularioaH">
-        <h5>Tiketaren erosketa</h5>
-        <?php
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            // Procesar el formulario y mostrar el resumen
+        <h5>Erosketa laburpena</h5>
+        <script>
+        function obtenerParametrosUrl() {
+            var url = window.location.href;
+            var parametros = url.split('?')[1];
+            if (parametros) {
+                var parametrosArray = parametros.split('&');
+                var parametrosObjeto = {};
 
-            // Aquí puedes acceder a los valores enviados por el formulario
-            $zinema = $_POST["zinemak"];
-            $filma = $_POST["filma"];
-            $data = $_POST["data"];
-            $saioa = $_POST["saioa"];
-            $sarrera = $_POST["sarrera"];
+                for (var i = 0; i < parametrosArray.length; i++) {
+                    var parametro = parametrosArray[i].split('=');
+                    parametrosObjeto[parametro[0]] = parametro[1];
+                }
 
-         
-     
-            echo "<p>Zinema: $zinema</p>";
-            echo "<p>Filma: $filma</p>";
-            echo "<p>Data: $data</p>";
-            echo "<p>Saioa: $saioa</p>";
-            echo "<p>Sarrera kopurua: $sarrera</p>";
-        } else {
-            // Si no se ha enviado el formulario, muestra el formulario
-        ?>
-            <form id="botoia" action="#" method="post">
-            </form>
-            
-        <?php
-        
+                alert(parametrosObjeto[0]);
+                return parametrosObjeto;
+            } else {
+                console.log("No hay parámetros en la URL.");
+                return null;
+            }
         }
-        ?>
+
+        // Resto del código JavaScript...
+    </script>
     </section>
         <footer>
             <div class="container3">
