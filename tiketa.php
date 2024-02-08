@@ -42,7 +42,7 @@
             FROM Filma
             INNER JOIN Saioa USING (idfilma)
             INNER JOIN Aretoa a ON Saioa.idaretoa = a.idaretoa
-            INNER JOIN zinema z ON a.idzinema = z.idzinema where z.idzinema = 1";
+            INNER JOIN zinema z ON a.idzinema = z.idzinema where z.idzinema = 2";
             $result = $mysqli->query($sql);
             while ($row = $result->fetch_assoc()) {
             ?>
@@ -54,6 +54,7 @@
             }
             ?>
         }
+
         function Data() {
             var zinema = document.getElementById("zinemak").value;
             var filma = document.getElementById("filma").value;
@@ -75,6 +76,7 @@
             }
             ?>
         }
+
         function Saioa() {
             var zinema = document.getElementById("zinemak").value;
             var filma = document.getElementById("filma").value;
@@ -96,6 +98,20 @@
             <?php
             }
             ?>
+
+            //TODO: Informazioaren bidalketa komprobazioa
+            function Bidali() {
+                alert("Erosketa burutu da");
+                var zinema = document.getElementById("zinemak").value;
+                var filma = document.getElementById("filma").value;
+                var data = document.getElementById("data").value;
+                var saioa = document.getElementById("saioa").value;
+                if (zinema == "" || filma == "" || data == "" || saioa == "") {
+                    alert("Eremu guztiak bete behar dira");
+                } else {
+                    window.location.href = "erosketa.php?zinema=" + zinema + "&filma=" + filma + "&data=" + data + "&saioa=" + saioa;
+                }
+            }
         }
     </script>
 </head>
@@ -151,7 +167,7 @@
             <select name="saioa" id="saioa">
             </select>
             <br><br>
-            <input class="botoia" type="submit" name="botoia" value="Erosi">
+            <input class="botoia" type="submit" name="botoia" value="Erosi" onclick="Bidali()">
         </form>
     </section>
     <footer>

@@ -1,5 +1,5 @@
 <?php
-
+    
     // DATU BASEAREKIN KONEXIOA
 
    // Konexioa sortu
