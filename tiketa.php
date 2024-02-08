@@ -203,19 +203,19 @@ session_start();
             <label for="zinemak">Aukeratu zinema:</label>
             <select name="zinemak" id="zinemak" onchange="FilmaUrl()">
             </select>
-            <br><br>
+            <br>
             <label for="filma">Aukeratu filma:</label>
             <select name="filma" id="filma" onchange="DataUrl()">
             </select>
-            <br><br>
+            <br>
             <label for="data">Aukeratu data:</label>
             <select id="data" name="data" onchange="SaioaUrl()">
             </select>
-            <br><br>
+            <br>
             <label for="saioa">Aukeratu saioa:</label>
             <select name="saioa" id="saioa">
             </select>
-            <br><br>
+            <br>
             <label for="kopurua">Sartu kopurua:</label>
             <input type="number" id="kopurua" name="kopurua" min="1" value="1" style="color: black">
             <br><br>
