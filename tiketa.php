@@ -25,6 +25,16 @@ session_start();
             window.location = window.location.href + "&zinemak="+zinema;
 
         }
+        function DataUrl() {
+            var filma = document.getElementById("filma").value;
+            let patharray = window.location.href;
+            window.location = window.location.href + "&filma="+filma;
+        }
+        function SaioaUrl() {
+            var data = document.getElementById("data").value;
+            let patharray = window.location.href;
+            window.location = window.location.href + "&data="+data;
+        }
 
         function ZinemaIzena() {
             var zinema = document.getElementById("zinemak");
@@ -44,7 +54,6 @@ session_start();
             ?>
             <?php
             if (isset($_GET['zinemak'])) {
-                echo $_GET['zinemak'];
             ?>
                 
                 document.getElementById("zinemak").value = "<?php echo $_GET['zinemak']; ?>";
@@ -65,26 +74,66 @@ session_start();
                     filma.appendChild(aukera);
                 <?php
                 }
-            }
-            ?>
-        }
-
-        function FilmaIzena() {
-            var filma = document.getElementById("filma");
-            <?php
-            $sql = "SELECT distinct(Izenburua), Filma.Idfilma 
-            FROM Filma
-            INNER JOIN Saioa USING (idfilma)
-            INNER JOIN Aretoa a ON Saioa.idaretoa = a.idaretoa
-            INNER JOIN zinema z ON a.idzinema = z.idzinema where z.idzinema = 2";
-            $result = $mysqli->query($sql);
-            while ($row = $result->fetch_assoc()) {
-            ?>
-                var aukera = document.createElement("option");
-                aukera.value = "<?php echo $row['Idfilma']; ?>";
-                aukera.textContent = "<?php echo $row['Izenburua']; ?>";
-                filma.appendChild(aukera);
-            <?php
+                if (isset($_GET['filma'])) {
+                ?>
+                    document.getElementById("filma").value = "<?php echo $_GET['filma']; ?>";
+                    <?php
+                    $filma = $_GET['filma'];
+                    $sql = "SELECT distinct(S_Data), idSaioa  
+                    FROM Filma
+                    INNER JOIN Saioa USING (idfilma)
+                    INNER JOIN Aretoa a ON Saioa.idaretoa = a.idaretoa
+                    INNER JOIN zinema z ON a.idzinema = z.idzinema where z.idzinema = $zinema and idfilma = $filma";
+                    $result = $mysqli->query($sql);
+                    while ($row = $result->fetch_assoc()) {
+                    ?>
+                        var aukera = document.createElement("option");
+                        aukera.value = "<?php echo $row['idSaioa']; ?>";
+                        aukera.textContent = "<?php echo $row['S_Data']; ?>";
+                        data.appendChild(aukera);
+                    <?php
+                    }
+                    if (isset($_GET['data'])) {
+                    ?>
+                        document.getElementById("data").value = "<?php echo $_GET['data']; ?>";
+                        <?php
+                        $data = $_GET['data'];
+                        $sql = "SELECT Ordu_Data, IdSaioa, S_Data
+                        FROM Filma
+                        INNER JOIN Saioa USING (idfilma)
+                        INNER JOIN Aretoa a ON Saioa.idaretoa = a.idaretoa
+                        INNER JOIN zinema z ON a.idzinema = z.idzinema where z.idzinema = $zinema and idfilma = $filma and S_Data = $data";
+                        $result = $mysqli->query($sql);
+                        while ($row = $result->fetch_assoc()) {
+                        ?>
+                            var aukera = document.createElement("option");
+                            aukera.value = "<?php echo $row['IdSaioa']; ?>";
+                            aukera.textContent = "<?php echo $row['Ordu_Data']; ?>";
+                            saioa.appendChild(aukera);
+                        <?php
+                        }
+                    }
+                    if (isset($_GET['data'])) {
+                        ?>
+                        document.getElementById("data").value = "<?php echo $_GET['data']; ?>";
+                        <?php
+                        $data = $_GET['data'];
+                        $sql = "SELECT Ordu_Data, IdSaioa, S_Data
+                        FROM Filma
+                        INNER JOIN Saioa USING (idfilma)
+                        INNER JOIN Aretoa a ON Saioa.idaretoa = a.idaretoa
+                        INNER JOIN zinema z ON a.idzinema = z.idzinema where z.idzinema = $zinema and idfilma = $filma and S_Data = $data";
+                        $result = $mysqli->query($sql);
+                        while ($row = $result->fetch_assoc()) {
+                            ?>
+                            var aukera = document.createElement("option");
+                            aukera.value = "<?php echo $row['IdSaioa']; ?>";
+                            aukera.textContent = "<?php echo $row['Ordu_Data']; ?>";
+                            saioa.appendChild(aukera);
+                            <?php
+                        }
+                    }
+                }
             }
             ?>
         }
@@ -190,11 +239,11 @@ session_start();
             </select>
             <br><br>
             <label for="filma">Aukeratu filma:</label>
-            <select name="filma" id="filma" onchange="Data()">
+            <select name="filma" id="filma" onchange="DataUrl()">
             </select>
             <br><br>
             <label for="data">Aukeratu data:</label>
-            <select id="data" name="data" onchange="Saioa()">
+            <select id="data" name="data" onchange="SaioaUrl()">
             </select>
             <br><br>
             <label for="saioa">Aukeratu saioa:</label>
