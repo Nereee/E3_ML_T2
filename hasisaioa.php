@@ -1,13 +1,46 @@
+<?php
+    session_start();
+    // DATU BASEAREKIN KONEXIOA
+
+   // Konexioa sortu
+$mysqli = new mysqli("localhost", "root", "", "db_zinema");
+
+// Konexioa egiaztatu
+if ($mysqli->connect_error) {
+  die("Connection failed: " . $mysqli->connect_error);
+}
+if(isset($_POST['fname'])){
+
+	
+
+    $username = $_POST ["fname"];
+    $password = $_POST ["fpassword"];
+    
+    $_SESSION['username'] = $username;
+    // Prepare and execute the query
+    $sql= "SELECT NAN FROM bezeroa WHERE erabiltzailea='$username' AND pasahitza ='$password'";
+    $result = $mysqli->query($sql);
+
+    
+
+    // Retrieve data
+    if($result->num_rows > 0){
+        header("Location: tiketa.php?user=$username");
+    } else {
+        $erroremezua = "Erabiltzailea edo pasahitza ez da zuzena. Mesedez saiatu berriro.";
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="eu">
-
-
+    
 <head>
     <title>Elorrieta zinema</title>
     <meta name="keywords" content="Elorrieta zinema, zinema, filmak, erreserbak, pelikulak">
     <meta name="author" content="HAPA">
-    <meta name="description"
-        content="Hasi saioa orria">
+    <meta name="description" content="Hasi saioa orria">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="favicon-16x16.png" type="image/x-icon">
@@ -16,11 +49,10 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
 </head>
 
 
-<body>
+<body onload="konprobatulogin()">
     <header>
         <div class="container">
             <div class="logo">
@@ -52,20 +84,12 @@
 
     <hr>
 <body>
-    <!-- Formularioaren sorkuntza, textu kutxak sortzeko eta bertan idazteko -->
     <section class="formularioaH">
     <h5>Saio hasiera</h5>
-    <form id="botoia" action="#" method="post">
-    <!-- Gmail-a idazteko -->
-    <input class="control" type="text" name="Gmail" value="" placeholder="Idatzi zure gmail">
-    <!-- Pasahitza idazteko, idazten dena ez da ikusiko (puntuak agertzen dira) -->
-    <input class="control" type="password" name="pasahitza" value="" placeholder="Pasahitza">
-    <!-- Botoi bat egiteko -->
-
-    <a href="#" class="botoia-link" onclick="document.getElementById('botoia').submit(); return false;"></a>
-
-
-    <input class="botoia" type="submit" name="botoia" value="Jarraitu">
+    <form id="botoia" action="hasisaioa.php" method="post">
+            <input class="control" type="text" name="fname" value="" placeholder="Idatzi zure izena" required>
+            <input class="control" type="password" name="fpassword" value="" placeholder="Pasahitza" required>
+            <input class="botoia" type="submit" name="botoia" value="Jarraitu" >
     </form>
 
     <p><a href="#"><b>Ez dut pasahitza gogoratzen</b></a></p>
@@ -104,5 +128,15 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        function konprobatulogin() {
+        <?php
+            if (isset($erroremezua)) {
+                echo 'alert("' . $erroremezua . '");';
+            }
+        ?>
+    }
+    </script>
 </body>
 </html>
