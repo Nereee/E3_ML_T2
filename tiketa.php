@@ -59,6 +59,7 @@ session_start();
             ?>
                 
                 document.getElementById("zinemak").value = "<?php echo $_GET['zinemak']; ?>";
+                document.getElementById("zinemak").style.color = "black"; 
                 <?php
     
                 $zinema = $_GET['zinemak'];
@@ -73,12 +74,14 @@ session_start();
                     var aukera = document.createElement("option");
                     aukera.value = "<?php echo $row['Idfilma']; ?>";
                     aukera.textContent = "<?php echo $row['Izenburua']; ?>";
+                    aukera.style.color = "black"; 
                     filma.appendChild(aukera);
                 <?php
                 }
                 if (isset($_GET['filma'])) {
                 ?>
                     document.getElementById("filma").value = "<?php echo $_GET['filma']; ?>";
+                    document.getElementById("filma").style.color = "black"; 
                     <?php
                     $filma = $_GET['filma'];
                     $sql = "SELECT distinct(S_Data), idSaioa  
@@ -92,12 +95,14 @@ session_start();
                         var aukera = document.createElement("option");
                         aukera.value = "<?php echo $row['idSaioa']; ?>";
                         aukera.textContent = "<?php echo $row['S_Data']; ?>";
+                        aukera.style.color = "black"; 
                         data.appendChild(aukera);
                     <?php
                     }
                     if (isset($_GET['data'])) {
                     ?>
                         document.getElementById("data").value = "<?php echo $_GET['data']; ?>";
+                        document.getElementById("data").aukera.style.color = "black"; 
                         <?php
                         $data = $_GET['data'];
                         $sql = "SELECT Ordu_Data, IdSaioa, S_Data
@@ -111,6 +116,7 @@ session_start();
                             var aukera = document.createElement("option");
                             aukera.value = "<?php echo $row['IdSaioa']; ?>";
                             aukera.textContent = "<?php echo $row['Ordu_Data']; ?>";
+                            aukera.style.color = "black"; 
                             saioa.appendChild(aukera);
                         <?php
                         }
@@ -118,6 +124,7 @@ session_start();
                     if (isset($_GET['data'])) {
                         ?>
                         document.getElementById("data").value = "<?php echo $_GET['data']; ?>";
+                        document.getElementById("data").aukera.style.color = "black"; 
                         <?php
                         $data = $_GET['data'];
                         $sql = "SELECT Ordu_Data, IdSaioa, S_Data
@@ -131,6 +138,7 @@ session_start();
                             var aukera = document.createElement("option");
                             aukera.value = "<?php echo $row['IdSaioa']; ?>";
                             aukera.textContent = "<?php echo $row['Ordu_Data']; ?>";
+                            aukera.style.color = "black"; 
                             saioa.appendChild(aukera);
                             <?php
                         }
@@ -156,10 +164,12 @@ session_start();
                 var aukera = document.createElement("option");
                 aukera.value = "<?php echo $row['idSaioa']; ?>";
                 aukera.textContent = "<?php echo $row['S_Data']; ?>";
+                aukera.style.color = "black"; 
                 data.appendChild(aukera);
             <?php
             }
             ?>
+            
         }
 
         function Saioa() {
@@ -179,6 +189,7 @@ session_start();
                 var aukera = document.createElement("option");
                 aukera.value = "<?php echo $row['IdSaioa']; ?>";
                 aukera.textContent = "<?php echo $row['Ordu_Data']; ?>";
+                aukera.style.color = "black"; 
                 saioa.appendChild(aukera);
             <?php
             }
