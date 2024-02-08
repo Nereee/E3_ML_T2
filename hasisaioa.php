@@ -1,5 +1,5 @@
 <?php
-    
+    session_start();
     // DATU BASEAREKIN KONEXIOA
 
    // Konexioa sortu
@@ -16,6 +16,7 @@ if(isset($_POST['fname'])){
     $username = $_POST ["fname"];
     $password = $_POST ["fpassword"];
     
+    $_SESSION['username'] = $username;
     // Prepare and execute the query
     $sql= "SELECT NAN FROM bezeroa WHERE erabiltzailea='$username' AND pasahitza ='$password'";
     $result = $mysqli->query($sql);

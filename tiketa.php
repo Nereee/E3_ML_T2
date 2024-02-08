@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="eu">
 
@@ -16,6 +19,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script>
+        function FilmaUrl() {
+            var zinema = document.getElementById("zinemak").value;
+            let patharray = window.location.href;
+            window.location = window.location.href + "&zinemak="+zinema;
+
+        }
+
         function ZinemaIzena() {
             var zinema = document.getElementById("zinemak");
             <?php
@@ -32,10 +42,34 @@
             <?php
             }
             ?>
+            <?php
+            if (isset($_GET['zinemak'])) {
+                echo $_GET['zinemak'];
+            ?>
+                
+                document.getElementById("zinemak").value = "<?php echo $_GET['zinemak']; ?>";
+                <?php
+    
+                $zinema = $_GET['zinemak'];
+                $sql = "SELECT distinct(Izenburua), Filma.Idfilma 
+                FROM Filma
+                INNER JOIN Saioa USING (idfilma)
+                INNER JOIN Aretoa a ON Saioa.idaretoa = a.idaretoa
+                INNER JOIN zinema z ON a.idzinema = z.idzinema where z.idzinema = $zinema";
+                $result = $mysqli->query($sql);
+                while ($row = $result->fetch_assoc()) {
+                ?>
+                    var aukera = document.createElement("option");
+                    aukera.value = "<?php echo $row['Idfilma']; ?>";
+                    aukera.textContent = "<?php echo $row['Izenburua']; ?>";
+                    filma.appendChild(aukera);
+                <?php
+                }
+            }
+            ?>
         }
 
         function FilmaIzena() {
-            var zinema = document.getElementById("zinemak").value;
             var filma = document.getElementById("filma");
             <?php
             $sql = "SELECT distinct(Izenburua), Filma.Idfilma 
@@ -150,9 +184,9 @@
     <hr>
     <section class="formularioaH">
         <h5>Tiketaren erosketa</h5>
-        <form id="botoia" action="erosketa.php" method="post">
+        <form id="botoia" action="erosketa.php" method="get">
             <label for="zinemak">Aukeratu zinema:</label>
-            <select name="zinemak" id="zinemak" onchange="FilmaIzena()">
+            <select name="zinemak" id="zinemak" onchange="FilmaUrl()">
             </select>
             <br><br>
             <label for="filma">Aukeratu filma:</label>
