@@ -44,7 +44,6 @@ session_start();
             ?>
             <?php
             if (isset($_GET['zinemak'])) {
-                echo $_GET['zinemak'];
             ?>
                 
                 document.getElementById("zinemak").value = "<?php echo $_GET['zinemak']; ?>";
@@ -65,6 +64,7 @@ session_start();
                     filma.appendChild(aukera);
                 <?php
                 }
+                
             }
             ?>
         }
