@@ -67,15 +67,13 @@
                     parametrosObjeto[parametro[0]] = parametro[1];
                 }
 
-                alert(parametrosObjeto[0]);
+                alert(parametrosObjeto[Object.keys(parametrosObjeto)[0]]);
                 return parametrosObjeto;
             } else {
                 console.log("No hay parámetros en la URL.");
                 return null;
             }
         }
-
-        // Resto del código JavaScript...
     </script>
     </section>
         <footer>
