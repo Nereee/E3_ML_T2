@@ -23,9 +23,8 @@ session_start();
         function DatuakLortu() {
             ZinemaIzena();
             FilmaIzena();
-            /*SaioaData();
-            SaioaOrdua();*/
         }
+
         function ZinemaIzena() {
             <?php
             $sql = "SELECT Idzinema, izena FROM zinema where Idzinema < 6";
@@ -54,37 +53,6 @@ session_start();
             }
             ?>
         }
-        //TOFIX: SaioaData eta SaioaOrdua funtzioak ez dute funtzionatzen datua ez lortzean
-        function SaioaData() {
-            <?php
-            $sql = "SELECT distinct(S_Data), idSaioa  
-                    FROM Filma
-                    INNER JOIN Saioa USING (idfilma)
-                    INNER JOIN Aretoa a ON Saioa.idaretoa = a.idaretoa
-                    INNER JOIN zinema z ON a.idzinema = z.idzinema where z.idzinema = $zinema and idfilma = $filma";
-            $result = $mysqli->query($sql);
-            while ($row = $result->fetch_assoc()) {
-                if ($row['idSaioa'] == $_SESSION['saioa']) {
-                    $_SESSION['saioaData'] = $row['S_Data'];
-                }
-            }
-            ?>
-        }
-        function SaioaOrdua(){
-            <?php
-            $sql = "SELECT Ordu_Data, IdSaioa, S_Data
-                        FROM Filma
-                        INNER JOIN Saioa USING (idfilma)
-                        INNER JOIN Aretoa a ON Saioa.idaretoa = a.idaretoa
-                        INNER JOIN zinema z ON a.idzinema = z.idzinema where z.idzinema = $zinema and idfilma = $filma and S_Data = $data";
-            $result = $mysqli->query($sql);
-            while ($row = $result->fetch_assoc()) {
-                if ($row['IdSaioa'] == $_SESSION['saioa']) {
-                    $_SESSION['saioaOrdua'] = $row['Ordu_Data'];
-                }
-            }
-            ?>
-        }
     </script>
 </head>
 
@@ -99,9 +67,7 @@ session_start();
         </div>
     </header>
 
-
     <hr>
-
 
     <nav>
         <div class="nabegaziobarra">
@@ -120,53 +86,53 @@ session_start();
     </nav>
 
 
-    <hr>    
-        <section class="formularioaH">
-            <h5>Tiketaren erosketa</h5>
-            <script onload="DatuakLortu()">
-                <?php
-                if (isset($_SESSION['username'])) {
-                    echo "document.write('<h5>Kaixo: " . $_SESSION['username'] . ".</h5>');";
-                    echo "document.write('<h5>" . $_SESSION['zinemaIzena'] . "</h5>');";
-                    echo "document.write('<h5>" . $_SESSION['filmaIzena'] . "</h5>');";
-                    echo "document.write('<h5>" . $_SESSION['saioaData'] . "</h5>');";
-                    echo "document.write('<h5>" . $_SESSION['saioaOrdua'] . "</h5>');";
-                } else {
-                    echo "document.write('<h5>Error on load</h5>');";
-                }
-                ?>
-            </script>
-        </section>
-        <footer>
-            <div class="container3">
-                <div class="info-footer">
-                    <h4>Informazioa</h4>
-                    <ul>
-                        <li>Agirre Lehendakariaren Etorb., 184</li>
-                        <li>48015 - Bilbo</li>
-                        <li>Autobusa: 70,46.</li>
-                        <li>Metroa: San Ignazio, Asturias irteera</li>
-                        <li> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
-                                <img alt="Licencia Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
-                            </a></li>
-                    </ul>
-                </div>
-                <div class="kontaktua">
-                    <h4>Kontaktua</h4>
-                    <i class="fa-solid fa-phone" style="color: #ffffff;"></i> 944 02 80 00
-                    <i class="fa-solid fa-envelope"></i> elorrietazinema@gmail.com
-                    <i class="fa-brands fa-instagram fa-sm" style="color: #ffffff;"></i>
-                    <i class="fa-brands fa-x-twitter"></i>
-                    <i class="fa-brands fa-facebook"></i>
-                </div>
-
-
-                <div class="mapa">
-                    <h4>Kokapena</h4>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5808.636528021377!2d-2.9667557!3d43.28665625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4e50774e8ca143%3A0x88bb341c60a9b44d!2sElorrieta%2C%2048015%20Bilbao%2C%20Vizcaya!5e0!3m2!1ses!2ses!4v1696938647128!5m2!1ses!2ses" width="100" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
+    <hr>
+    <section class="formularioaH">
+        <h5>Tiketaren erosketa</h5>
+        <script onload="DatuakLortu()">
+            <?php
+            if (isset($_SESSION['username'])) {
+                echo "document.write('<h5>Kaixo: " . $_SESSION['username'] . ".</h5>');";
+                echo "document.write('<h5>" . $_SESSION['zinemaIzena'] . "</h5>');";
+                echo "document.write('<h5>" . $_SESSION['filmaIzena'] . "</h5>');";
+                echo "document.write('<h5>" . $_SESSION['S_Data'] . "</h5>');";
+                echo "document.write('<h5>" . $_SESSION['Ordu_Data'] . "</h5>');";
+            } else {
+                echo "document.write('<h5>Error on load</h5>');";
+            }
+            ?>
+        </script>
+    </section>
+    <footer>
+        <div class="container3">
+            <div class="info-footer">
+                <h4>Informazioa</h4>
+                <ul>
+                    <li>Agirre Lehendakariaren Etorb., 184</li>
+                    <li>48015 - Bilbo</li>
+                    <li>Autobusa: 70,46.</li>
+                    <li>Metroa: San Ignazio, Asturias irteera</li>
+                    <li> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
+                            <img alt="Licencia Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
+                        </a></li>
+                </ul>
             </div>
-        </footer>
-    </body>
+            <div class="kontaktua">
+                <h4>Kontaktua</h4>
+                <i class="fa-solid fa-phone" style="color: #ffffff;"></i> 944 02 80 00
+                <i class="fa-solid fa-envelope"></i> elorrietazinema@gmail.com
+                <i class="fa-brands fa-instagram fa-sm" style="color: #ffffff;"></i>
+                <i class="fa-brands fa-x-twitter"></i>
+                <i class="fa-brands fa-facebook"></i>
+            </div>
+
+
+            <div class="mapa">
+                <h4>Kokapena</h4>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5808.636528021377!2d-2.9667557!3d43.28665625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4e50774e8ca143%3A0x88bb341c60a9b44d!2sElorrieta%2C%2048015%20Bilbao%2C%20Vizcaya!5e0!3m2!1ses!2ses!4v1696938647128!5m2!1ses!2ses" width="100" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </footer>
+</body>
 
 </html>
