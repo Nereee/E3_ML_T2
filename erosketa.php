@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="eu">
 
@@ -15,10 +19,77 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <script>
+        function DatuakLortu() {
+            ZinemaIzena();
+            FilmaIzena();
+            /*SaioaData();
+            SaioaOrdua();*/
+        }
+        function ZinemaIzena() {
+            <?php
+            $sql = "SELECT Idzinema, izena FROM zinema where Idzinema < 6";
+            $mysqli = new mysqli("localhost", "root", "", "db_zinema");
+            $result = $mysqli->query($sql);
+            while ($row = $result->fetch_assoc()) {
+                if ($row['Idzinema'] == $_SESSION['zinema']) {
+                    $_SESSION['zinemaIzena'] = $row['izena'];
+                }
+            }
+            ?>
+        }
+
+        function FilmaIzena() {
+            <?php
+            $sql = "SELECT distinct(Izenburua), Filma.Idfilma 
+           FROM Filma
+           INNER JOIN Saioa USING (idfilma)
+           INNER JOIN Aretoa a ON Saioa.idaretoa = a.idaretoa
+           INNER JOIN zinema z ON a.idzinema = z.idzinema where z.idzinema = '" . $_SESSION['zinema'] . "'";
+            $result = $mysqli->query($sql);
+            while ($row = $result->fetch_assoc()) {
+                if ($row['Idfilma'] == $_SESSION['filma']) {
+                    $_SESSION['filmaIzena'] = $row['Izenburua'];
+                }
+            }
+            ?>
+        }
+        //TOFIX: SaioaData eta SaioaOrdua funtzioak ez dute funtzionatzen datua ez lortzean
+        function SaioaData() {
+            <?php
+            $sql = "SELECT distinct(S_Data), idSaioa  
+                    FROM Filma
+                    INNER JOIN Saioa USING (idfilma)
+                    INNER JOIN Aretoa a ON Saioa.idaretoa = a.idaretoa
+                    INNER JOIN zinema z ON a.idzinema = z.idzinema where z.idzinema = $zinema and idfilma = $filma";
+            $result = $mysqli->query($sql);
+            while ($row = $result->fetch_assoc()) {
+                if ($row['idSaioa'] == $_SESSION['saioa']) {
+                    $_SESSION['saioaData'] = $row['S_Data'];
+                }
+            }
+            ?>
+        }
+        function SaioaOrdua(){
+            <?php
+            $sql = "SELECT Ordu_Data, IdSaioa, S_Data
+                        FROM Filma
+                        INNER JOIN Saioa USING (idfilma)
+                        INNER JOIN Aretoa a ON Saioa.idaretoa = a.idaretoa
+                        INNER JOIN zinema z ON a.idzinema = z.idzinema where z.idzinema = $zinema and idfilma = $filma and S_Data = $data";
+            $result = $mysqli->query($sql);
+            while ($row = $result->fetch_assoc()) {
+                if ($row['IdSaioa'] == $_SESSION['saioa']) {
+                    $_SESSION['saioaOrdua'] = $row['Ordu_Data'];
+                }
+            }
+            ?>
+        }
+    </script>
 </head>
 
 
-<body onload="obtenerParametrosUrl()">
+<body onload="DatuakLortu()">
 
     <header>
         <div class="container">
@@ -49,33 +120,23 @@
     </nav>
 
 
-    <hr>
-
-    <body>
-    <section class="formularioaH">
-        <h5>Erosketa laburpena</h5>
-        <script>
-        function obtenerParametrosUrl() {
-            var url = window.location.href;
-            var parametros = url.split('?')[1];
-            if (parametros) {
-                var parametrosArray = parametros.split('&');
-                var parametrosObjeto = {};
-
-                for (var i = 0; i < parametrosArray.length; i++) {
-                    var parametro = parametrosArray[i].split('=');
-                    parametrosObjeto[parametro[0]] = parametro[1];
+    <hr>    
+        <section class="formularioaH">
+            <h5>Tiketaren erosketa</h5>
+            <script onload="DatuakLortu()">
+                <?php
+                if (isset($_SESSION['username'])) {
+                    echo "document.write('<h5>Kaixo: " . $_SESSION['username'] . ".</h5>');";
+                    echo "document.write('<h5>" . $_SESSION['zinemaIzena'] . "</h5>');";
+                    echo "document.write('<h5>" . $_SESSION['filmaIzena'] . "</h5>');";
+                    echo "document.write('<h5>" . $_SESSION['saioaData'] . "</h5>');";
+                    echo "document.write('<h5>" . $_SESSION['saioaOrdua'] . "</h5>');";
+                } else {
+                    echo "document.write('<h5>Error on load</h5>');";
                 }
-
-                alert(parametrosObjeto[Object.keys(parametrosObjeto)[0]]);
-                return parametrosObjeto;
-            } else {
-                console.log("No hay parámetros en la URL.");
-                return null;
-            }
-        }
-    </script>
-    </section>
+                ?>
+            </script>
+        </section>
         <footer>
             <div class="container3">
                 <div class="info-footer">

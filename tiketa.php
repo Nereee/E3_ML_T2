@@ -23,7 +23,6 @@ session_start();
             var zinema = document.getElementById("zinemak").value;
             let patharray = window.location.href;
             window.location = window.location.href + "&zinemak=" + zinema;
-
         }
 
         function DataUrl() {
@@ -62,8 +61,8 @@ session_start();
                 document.getElementById("zinemak").value = "<?php echo $_GET['zinemak']; ?>";
                 document.getElementById("zinemak").style.color = "black";
                 <?php
-
                 $zinema = $_GET['zinemak'];
+                $_SESSION['zinema'] = $zinema;
                 $sql = "SELECT distinct(Izenburua), Filma.Idfilma 
                 FROM Filma
                 INNER JOIN Saioa USING (idfilma)
@@ -122,33 +121,11 @@ session_start();
                         <?php
                         }
                     }
-                    if (isset($_GET['data'])) {
-                        ?>
-                        document.getElementById("data").value = "<?php echo $_GET['data']; ?>";
-                        document.getElementById("data").aukera.style.color = "black";
-                        <?php
-                        $data = $_GET['data'];
-                        $sql = "SELECT Ordu_Data, IdSaioa, S_Data
-                        FROM Filma
-                        INNER JOIN Saioa USING (idfilma)
-                        INNER JOIN Aretoa a ON Saioa.idaretoa = a.idaretoa
-                        INNER JOIN zinema z ON a.idzinema = z.idzinema where z.idzinema = $zinema and idfilma = $filma and S_Data = $data";
-                        $result = $mysqli->query($sql);
-                        while ($row = $result->fetch_assoc()) {
-                        ?>
-                            var aukera = document.createElement("option");
-                            aukera.value = "<?php echo $row['IdSaioa']; ?>";
-                            aukera.textContent = "<?php echo $row['Ordu_Data']; ?>";
-                            aukera.style.color = "black";
-                            saioa.appendChild(aukera);
-                        <?php
-                        }
-                    }
                 }
             }
             ?>
         }
-        //TODO: Informazioaren bidalketa komprobazioa
+
         function Bidali() {
             alert("Erosketa burutu da");
             var zinema = document.getElementById("zinemak").value;
@@ -159,7 +136,11 @@ session_start();
             if (zinema == "" || filma == "" || data == "" || saioa == "") {
                 alert("Eremu guztiak bete behar dira");
             } else {
-                window.location.href = "erosketa.php?zinema=" + zinema + "&filma=" + filma + "&data=" + data + "&saioa=" + saioa + "&kopurua=" + kopurua;
+                //$_SESSION['zinema'] = sessionStorage.setItem('zinema', zinema);
+                sessionStorage.setItem('filma', filma);
+                sessionStorage.setItem('data', data);
+                sessionStorage.setItem('saioa', saioa);
+                sessionStorage.setItem('kopurua', kopurua);
             }
         }
     </script>
@@ -202,18 +183,22 @@ session_start();
         <form id="botoia" action="erosketa.php" method="get">
             <label for="zinemak">Aukeratu zinema:</label>
             <select name="zinemak" id="zinemak" onchange="FilmaUrl()">
+                <option value="0" style="color: black">-</option>
             </select>
             <br>
             <label for="filma">Aukeratu filma:</label>
             <select name="filma" id="filma" onchange="DataUrl()">
+                <option value="0" style="color: black">-</option>
             </select>
             <br>
             <label for="data">Aukeratu data:</label>
             <select id="data" name="data" onchange="SaioaUrl()">
+                <option value="0" style="color: black">-</option>
             </select>
             <br>
             <label for="saioa">Aukeratu saioa:</label>
             <select name="saioa" id="saioa">
+                <option value="0" style="color: black">-</option>
             </select>
             <br>
             <label for="kopurua">Sartu kopurua:</label>
