@@ -21,17 +21,20 @@ session_start();
 
     <script>
         function DatuakLortu() {
+            <?php
+            echo $_SESSION['zinema'];
+            ?>
             ZinemaIzena();
             FilmaIzena();
         }
 
         function ZinemaIzena() {
             <?php
-            $sql = "SELECT Idzinema, izena FROM zinema where Idzinema < 6";
+            $sql = "SELECT Idzinema, izena FROM zinema where Idzinema < 6 and '" . $_SESSION['zinema'] . "' = Idzinema";
             $mysqli = new mysqli("localhost", "root", "", "db_zinema");
             $result = $mysqli->query($sql);
             while ($row = $result->fetch_assoc()) {
-                if ($row['Idzinema'] == $_SESSION['zinema']) {
+                if ($row['Idzinema'] == $_SESSION['zinemak']) {
                     $_SESSION['zinemaIzena'] = $row['izena'];
                 }
             }
@@ -93,10 +96,9 @@ session_start();
             <?php
             if (isset($_SESSION['username'])) {
                 echo "document.write('<h5>Kaixo: " . $_SESSION['username'] . ".</h5>');";
-                echo "document.write('<h5>" . $_SESSION['zinemaIzena'] . "</h5>');";
-                echo "document.write('<h5>" . $_SESSION['filmaIzena'] . "</h5>');";
-                echo "document.write('<h5>" . $_SESSION['S_Data'] . "</h5>');";
-                echo "document.write('<h5>" . $_SESSION['Ordu_Data'] . "</h5>');";
+                echo "document.write('<h5>Aukeratutako zinema: " . $_SESSION['zinemaIzena'] . "</h5>');";
+                echo "document.write('<h5>Aukeratutako filma: " . $_SESSION['filmaIzena'] . "</h5>');";
+                echo "document.write('<h5>Aukeratutako eguna: " . $_SESSION['data'] . "</h5>');";
             } else {
                 echo "document.write('<h5>Error on load</h5>');";
             }

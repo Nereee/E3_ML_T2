@@ -88,6 +88,7 @@ session_start();
                     document.getElementById("filma").style.color = "black";
                     <?php
                     $filma = $_GET['filma'];
+                    $_SESSION['filma'] = $filma;
                     $sql = "SELECT distinct(S_Data), idSaioa  
                     FROM Filma
                     INNER JOIN Saioa USING (idfilma)
@@ -112,6 +113,7 @@ session_start();
                         document.getElementById("data").style.color = "black";
                         <?php
                         $data = $_GET['data'];
+                        $_SESSION['data'] = $data;
                         $sql = "SELECT Ordu_Data, IdSaioa, S_Data
                         FROM Filma
                         INNER JOIN Saioa USING (idfilma)
@@ -133,23 +135,6 @@ session_start();
             ?>
         }
 
-        function Bidali() {
-            alert("Erosketa burutu da");
-            var zinema = document.getElementById("zinemak").value;
-            var filma = document.getElementById("filma").value;
-            var data = document.getElementById("data").value;
-            var saioa = document.getElementById("saioa").value;
-            var kopurua = document.getElementById("kopurua").value;
-            if (zinema == "" || filma == "" || data == "" || saioa == "") {
-                alert("Eremu guztiak bete behar dira");
-            } else {
-                //$_SESSION['zinema'] = sessionStorage.setItem('zinema', zinema);
-                sessionStorage.setItem('filma', filma);
-                sessionStorage.setItem('data', data);
-                sessionStorage.setItem('saioa', saioa);
-                sessionStorage.setItem('kopurua', kopurua);
-            }
-        }
     </script>
 </head>
 
