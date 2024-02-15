@@ -96,6 +96,8 @@ session_start();
                 echo "document.write('<h5>Aukeratutako zinema: " . $_SESSION['zinemaIzena'] . "</h5>');";
                 echo "document.write('<h5>Aukeratutako filma: " . $_SESSION['filmaIzena'] . "</h5>');";
                 echo "document.write('<h5>Aukeratutako eguna: " . $_SESSION['data'] . "</h5>');";
+                echo "document.write('<h5>Aukeratutako ordua: " . $_GET['saioa'] . "</h5>');";
+                echo "document.write('<h5>Aukeratutako kantitatea: " . $_GET['kopurua'] . "</h5>');";
             } else {
                 echo "document.write('<h5>Error on load</h5>');";
             }

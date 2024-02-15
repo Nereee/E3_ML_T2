@@ -19,22 +19,33 @@ session_start();
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI/t1qEzW9Xp8hYK3GIvGz8Nszptr5S9ZBvTqUfM=" crossorigin="anonymous"></script>
 
     <script>
-        function FilmaUrl() {
+        function ZinemaUrl() {
             var zinema = document.getElementById("zinemak").value;
             let patharray = window.location.href;
             window.location = window.location.href + "&zinemak=" + zinema;
         }
 
-        function DataUrl() {
+        function FilmaUrl() {
             var filma = document.getElementById("filma").value;
             let patharray = window.location.href;
             window.location = window.location.href + "&filma=" + filma;
         }
 
-        function SaioaUrl() {
+        function DataUrl() {
             var data = document.getElementById("data").value;
             let patharray = window.location.href;
             window.location = window.location.href + "&data=" + data;
+        }
+        function SaioaUrl() {
+            var saioa = document.getElementById("saioa").value;
+            let patharray = window.location.href;
+            window.location = window.location.href + "&saioa=" + saioa;
+            <?php
+            if (isset($_GET['saioa'])) {
+                $saioa = $_GET['saioa'];
+                $_SESSION['saioa'] = $saioa;
+            }
+            ?>
         }
 
         function ZinemaIzena() {
@@ -174,22 +185,22 @@ session_start();
         <h5>Tiketaren erosketa</h5>
         <form id="botoia" action="erosketa.php" method="get">
             <label for="zinemak">Aukeratu zinema:</label>
-            <select name="zinemak" id="zinemak" onchange="FilmaUrl()">
+            <select name="zinemak" id="zinemak" onchange="ZinemaUrl()">
                 <option value="0" style="color: black">-</option>
             </select>
             <br>
             <label for="filma">Aukeratu filma:</label>
-            <select name="filma" id="filma" onchange="DataUrl()">
+            <select name="filma" id="filma" onchange="FilmaUrl()">
                 <option value="0" style="color: black">-</option>
             </select>
             <br>
             <label for="data">Aukeratu data:</label>
-            <select id="data" name="data" onchange="SaioaUrl()">
+            <select id="data" name="data" onchange="DataUrl()">
                 <option value="0" style="color: black">-</option>
             </select>
             <br>
             <label for="saioa">Aukeratu saioa:</label>
-            <select name="saioa" id="saioa">
+            <select name="saioa" id="saioa" onchange="SaioaURL()">
                 <option value="0" style="color: black">-</option>
             </select>
             <br>
