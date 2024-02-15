@@ -21,9 +21,6 @@ session_start();
 
     <script>
         function DatuakLortu() {
-            <?php
-            echo $_SESSION['zinema'];
-            ?>
             ZinemaIzena();
             FilmaIzena();
         }
@@ -34,7 +31,7 @@ session_start();
             $mysqli = new mysqli("localhost", "root", "", "db_zinema");
             $result = $mysqli->query($sql);
             while ($row = $result->fetch_assoc()) {
-                if ($row['Idzinema'] == $_SESSION['zinemak']) {
+                if ($row['Idzinema'] == $_SESSION['zinema']) {
                     $_SESSION['zinemaIzena'] = $row['izena'];
                 }
             }
