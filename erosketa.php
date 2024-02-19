@@ -23,6 +23,7 @@ session_start();
         function DatuakLortu() {
             ZinemaIzena();
             FilmaIzena();
+            window.location = window.location.href + "&deskontua=" + deskontua() + "&tot=" + prezioTotala();
         }
 
         function ZinemaIzena() {
@@ -52,6 +53,38 @@ session_start();
                 }
             }
             ?>
+        }
+
+        function deskontua() {
+            var kantitatea = <?php echo $_GET['kopurua'] ?>;
+            var deskontua = 0;
+            if (kantitatea == 2) {
+                deskontua = 0.2;
+            } else if (kantitatea >= 3) {
+                deskontua = 0.3;
+            }
+            return deskontua;
+        }
+
+        function prezioTotala() {
+            var kantitatea = <?php echo $_GET['kopurua'] ?>;
+            var prezioa = 5;
+            var deskontua = 0;
+            if (kantitatea == 2) {
+                deskontua = 0.2;
+            } else if (kantitatea >= 3) {
+                deskontua = 0.3;
+            }
+            return (kantitatea * prezioa) - (kantitatea * prezioa * deskontua);
+        }
+
+        function insert() {
+            <?php
+            $sql = "INSERT INTO erosketa (Jatorria, Deskontua, PrezioTot) VALUES ('1', '" . $_GET['deskontua'] . "', '" . $_GET['tot'] . "')";
+            $mysqli = new mysqli("localhost", "root", "", "db_zinema");
+            $result = $mysqli->query($sql);
+            ?>
+            window.alert("Erosketa burutu da");
         }
     </script>
 </head>
@@ -89,20 +122,20 @@ session_start();
     <hr>
     <section class="formularioaH">
         <h5>Tiketaren erosketa</h5>
-        <script onload="DatuakLortu()">
+        <script>
             <?php
             if (isset($_SESSION['username'])) {
                 echo "document.write('<h5>Kaixo: " . $_SESSION['username'] . ".</h5>');";
-                echo "document.write('<h5>Aukeratutako zinema: " . $_SESSION['zinemaIzena'] . "</h5>');";
-                echo "document.write('<h5>Aukeratutako filma: " . $_SESSION['filmaIzena'] . "</h5>');";
-                echo "document.write('<h5>Aukeratutako eguna: " . $_SESSION['data'] . "</h5>');";
-                echo "document.write('<h5>Aukeratutako ordua: " . $_GET['saioa'] . "</h5>');";
-                echo "document.write('<h5>Aukeratutako kantitatea: " . $_GET['kopurua'] . "</h5>');";
+                echo "document.write('<p> " . $_SESSION['zinemaIzena'] . " zineman, " . $_SESSION['filmaIzena'] . " pelikula ikusiko duzu " . $_SESSION['data'] . " egunean " . $_GET['saioa'] . " orduan. " . $_GET['kopurua'] . " tiket erosiko da/dira.</p>');";
+                echo "document.write('<p>Prezioa: 5€/tiket eta " . $_GET['kopurua'] . ".</p>');";
             } else {
                 echo "document.write('<h5>Error on load</h5>');";
             }
             ?>
         </script>
+        <p id="Deskontuak"></p>
+        <p id="Preziotot"></p>
+        <button onclick="insert()">Erosi</button>
     </section>
     <footer>
         <div class="container3">
@@ -134,6 +167,10 @@ session_start();
             </div>
         </div>
     </footer>
+    <script>
+        document.getElementById('Deskontuak').innerHTML = 'Deskontua: ' + (deskontua() * 100) + '%';
+        document.getElementById('Preziotot').innerHTML = 'Prezio totala: ' + prezioTotala() + '€';
+    </script>
 </body>
 
 </html>

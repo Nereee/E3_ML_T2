@@ -136,6 +136,7 @@ session_start();
                             var aukera = document.createElement("option");
                             aukera.value = "<?php echo $row['Ordu_Data']; ?>";
                             aukera.textContent = "<?php echo $row['Ordu_Data']; ?>";
+                            <?php $_SESSION['idsaioa'] = $row['IdSaioa']; ?>
                             aukera.style.color = "black";
                             saioa.appendChild(aukera);
                         <?php
