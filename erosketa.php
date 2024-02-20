@@ -29,7 +29,7 @@ session_start();
         function ZinemaIzena() {
             <?php
             $sql = "SELECT Idzinema, izena FROM zinema where Idzinema < 6 and '" . $_SESSION['zinema'] . "' = Idzinema";
-            $mysqli = new mysqli("localhost", "root", "", "db_zinema");
+            $mysqli = new mysqli("localhost", "root", "", "db_e3zinema");
             $result = $mysqli->query($sql);
             while ($row = $result->fetch_assoc()) {
                 if ($row['Idzinema'] == $_SESSION['zinema']) {
@@ -81,7 +81,7 @@ session_start();
         function insert() {
             <?php
             $sql = "INSERT INTO erosketa (Jatorria, Deskontua, PrezioTot) VALUES ('1', '" . $_GET['deskontua'] . "', '" . $_GET['tot'] . "')";
-            $mysqli = new mysqli("localhost", "root", "", "db_zinema");
+            $mysqli = new mysqli("localhost", "root", "", "db_e3zinema");
             $result = $mysqli->query($sql);
             ?>
             window.alert("Erosketa burutu da");

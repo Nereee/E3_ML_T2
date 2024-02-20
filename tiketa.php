@@ -53,7 +53,7 @@ session_start();
             var zinema = document.getElementById("zinemak");
             <?php
             $sql = "SELECT Idzinema, izena FROM zinema where Idzinema < 6";
-            $mysqli = new mysqli("localhost", "root", "", "db_zinema");
+            $mysqli = new mysqli("localhost", "root", "", "db_e3zinema");
             $result = $mysqli->query($sql);
 
             while ($row = $result->fetch_assoc()) {
