@@ -18,79 +18,6 @@ session_start();
     <script src="https://kit.fontawesome.com/9b73a90cb7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <script>
-        function DatuakLortu() {
-            ZinemaIzena();
-            FilmaIzena();
-            window.location = window.location.href + "&deskontua=" + deskontua() + "&tot=" + prezioTotala();
-        }
-
-        function ZinemaIzena() {
-            <?php
-            $sql = "SELECT Idzinema, izena FROM zinema where Idzinema < 6 and '" . $_SESSION['zinema'] . "' = Idzinema";
-            $mysqli = new mysqli("localhost", "root", "", "db_e3zinema");
-            $result = $mysqli->query($sql);
-            while ($row = $result->fetch_assoc()) {
-                if ($row['Idzinema'] == $_SESSION['zinema']) {
-                    $_SESSION['zinemaIzena'] = $row['izena'];
-                }
-            }
-            ?>
-        }
-
-        function FilmaIzena() {
-            <?php
-            $sql = "SELECT distinct(Izenburua), Filma.Idfilma 
-           FROM Filma
-           INNER JOIN Saioa USING (idfilma)
-           INNER JOIN Aretoa a ON Saioa.idaretoa = a.idaretoa
-           INNER JOIN zinema z ON a.idzinema = z.idzinema where z.idzinema = '" . $_SESSION['zinema'] . "'";
-            $result = $mysqli->query($sql);
-            while ($row = $result->fetch_assoc()) {
-                if ($row['Idfilma'] == $_SESSION['filma']) {
-                    $_SESSION['filmaIzena'] = $row['Izenburua'];
-                }
-            }
-            ?>
-        }
-
-        function deskontua() {
-            var kantitatea = <?php echo $_GET['kopurua'] ?>;
-            var deskontua = 0;
-            if (kantitatea == 2) {
-                deskontua = 0.2;
-            } else if (kantitatea >= 3) {
-                deskontua = 0.3;
-            }
-            return deskontua;
-        }
-
-        function prezioTotala() {
-            var kantitatea = <?php echo $_GET['kopurua'] ?>;
-            var prezioa = 5;
-            var deskontua = 0;
-            if (kantitatea == 2) {
-                deskontua = 0.2;
-            } else if (kantitatea >= 3) {
-                deskontua = 0.3;
-            }
-            return (kantitatea * prezioa) - (kantitatea * prezioa * deskontua);
-        }
-
-        //TOFIX: Erosketa datuak sartu eta kentzean bug kendu
-        function insert() {
-            console.log("insterta exekutatuko da");
-            window.alert("Erosketa burutu da");
-            // Jatorria = 1 -> Webgunea da. 0 -> App-a da
-            <?php
-            $sql = "INSERT INTO erosketa (Jatorria, Deskontua, PrezioTot, NAN) VALUES ('1', '" . $_GET['deskontua'] . "', '" . $_GET['tot'] . "', '" . $_SESSION['NAN'] . "')";
-            $mysqli = new mysqli("localhost", "root", "", "db_zinema");
-            $result = $mysqli->query($sql);
-            ?>
-            log("insterta exekutatu da");
-        }
-    </script>
 </head>
 
 <body onload="DatuakLortu()">
@@ -126,6 +53,19 @@ session_start();
     <section class="formularioaH">
         <h5>Tiketaren erosketa</h5>
         <script>
+            function insert() {
+                console.log("insterta exekutatuko da");
+                window.alert("Erosketa burutu da");
+                // Jatorria = 1 -> Webgunea da. 0 -> App-a da
+                <?php
+                $sql = "INSERT INTO erosketa (Jatorria, Deskontua, PrezioTot, NAN) VALUES ('1', '" . $_GET['deskontua'] . "', '" . $_GET['tot'] . "', '" . $_SESSION['NAN'] . "')";
+                $mysqli = new mysqli("localhost", "root", "", "db_e3zinema");
+                $result = $mysqli->query($sql);
+                ?>
+                log("insterta exekutatu da");
+            }
+
+
             <?php
             if (isset($_SESSION['username'])) {
                 echo "document.write('<h5>Kaixo: " . $_SESSION['username'] . ".</h5>');";
@@ -138,7 +78,7 @@ session_start();
         </script>
         <p id="Deskontuak"></p>
         <p id="Preziotot"></p>
-        <button onclick="insert()">Erosi</button>
+        <input type="button" onclick="insert()" value="Erosi">
     </section>
     <footer>
         <div class="container3">
@@ -171,30 +111,8 @@ session_start();
         </div>
     </footer>
     <script>
-        function deskontua() {
-            var kantitatea = <?php echo $_GET['kopurua'] ?>;
-            var deskontua = 0;
-            if (kantitatea == 2) {
-                deskontua = 0.2;
-            } else if (kantitatea >= 3) {
-                deskontua = 0.3;
-            }
-            return deskontua;
-        }
-
-        function prezioTotala() {
-            var kantitatea = <?php echo $_GET['kopurua'] ?>;
-            var prezioa = 5;
-            var deskontua = 0;
-            if (kantitatea == 2) {
-                deskontua = 0.2;
-            } else if (kantitatea >= 3) {
-                deskontua = 0.3;
-            }
-            return (kantitatea * prezioa) - (kantitatea * prezioa * deskontua);
-        }
-        document.getElementById('Deskontuak').innerHTML = 'Deskontua: ' + (deskontua() * 100) + '%';
-        document.getElementById('Preziotot').innerHTML = 'Prezio totala: ' + prezioTotala() + '€';
+        document.getElementById('Deskontuak').innerHTML = 'Deskontua: ' + (<?php echo $_GET['deskontua'] ?> * 100) + '%';
+        document.getElementById('Preziotot').innerHTML = 'Prezio totala: ' + <?php echo $_GET['tot'] ?> + '€';
     </script>
 </body>
 

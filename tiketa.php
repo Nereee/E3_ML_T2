@@ -36,6 +36,7 @@ session_start();
             let patharray = window.location.href;
             window.location = window.location.href + "&data=" + data;
         }
+
         function SaioaUrl() {
             var saioa = document.getElementById("saioa").value;
             let patharray = window.location.href;
@@ -76,14 +77,15 @@ session_start();
                 <?php
                 $zinema = $_GET['zinemak'];
                 $_SESSION['zinema'] = $zinema;
-                $sql = "SELECT distinct(Izenburua), Filma.Idfilma 
+                $sql = "SELECT distinct(Izenburua), Filma.Idfilma, z.izena 
                 FROM Filma
                 INNER JOIN Saioa USING (idfilma)
                 INNER JOIN Aretoa a ON Saioa.idaretoa = a.idaretoa
                 INNER JOIN zinema z ON a.idzinema = z.idzinema where z.idzinema = $zinema";
                 $result = $mysqli->query($sql);
                 while ($row = $result->fetch_assoc()) {
-                ?>
+                    $_SESSION['zinemaIzena'] = $row['izena'];
+                    ?>
                     var aukera = document.createElement("option");
                     aukera.value = "<?php echo $row['Idfilma']; ?>";
                     aukera.textContent = "<?php echo $row['Izenburua']; ?>";
@@ -100,13 +102,14 @@ session_start();
                     <?php
                     $filma = $_GET['filma'];
                     $_SESSION['filma'] = $filma;
-                    $sql = "SELECT distinct(S_Data), idSaioa  
+                    $sql = "SELECT distinct(S_Data), idSaioa, izenburua 
                     FROM Filma
                     INNER JOIN Saioa USING (idfilma)
                     INNER JOIN Aretoa a ON Saioa.idaretoa = a.idaretoa
                     INNER JOIN zinema z ON a.idzinema = z.idzinema where z.idzinema = $zinema and idfilma = $filma";
                     $result = $mysqli->query($sql);
                     while ($row = $result->fetch_assoc()) {
+                        $_SESSION['filmaIzena'] = $row['izenburua'];
                     ?>
                         var aukera = document.createElement("option");
                         aukera.value = "<?php echo $row['S_Data']; ?>";
@@ -139,7 +142,7 @@ session_start();
                             <?php $_SESSION['idsaioa'] = $row['IdSaioa']; ?>
                             aukera.style.color = "black";
                             saioa.appendChild(aukera);
-                        <?php
+            <?php
                         }
                     }
                 }
@@ -147,6 +150,41 @@ session_start();
             ?>
         }
 
+        function deskontua() {
+            var kantitatea = 0;
+            var deskontua = 0;
+            if (kantitatea == 2) {
+                deskontua = 0.2;
+            } else if (kantitatea >= 3) {
+                deskontua = 0.3;
+            }
+            return deskontua;
+        }
+
+        function prezioTotala() {
+            var kantitatea = 0;
+            var prezioa = 5;
+            var deskontua = 0;
+            if (kantitatea == 2) {
+                deskontua = 0.2;
+            } else if (kantitatea >= 3) {
+                deskontua = 0.3;
+            }
+            return (kantitatea * prezioa) - (kantitatea * prezioa * deskontua);
+        }
+
+        function prezioa() {
+            var kantitatea = 0;
+            var prezioa = 5;
+            var deskontua = 0;
+            if (kantitatea == 2) {
+                deskontua = 0.2;
+            } else if (kantitatea >= 3) {
+                deskontua = 0.3;
+            }
+            document.getElementById("deskontua").value = deskontua;
+            document.getElementById("tot").value = (kantitatea * prezioa) - (kantitatea * prezioa * deskontua);
+        }
     </script>
 </head>
 
@@ -206,9 +244,11 @@ session_start();
             </select>
             <br>
             <label for="kopurua">Sartu kopurua:</label>
-            <input type="number" id="kopurua" name="kopurua" min="1" value="1" style="color: black">
+            <input type="number" id="kopurua" name="kopurua" min="1" value="0" style="color: black" onchange="prezioa()">
             <br><br>
-            <input class="botoia" type="submit" onclick="Bidali()">
+            <input type="hidden" name="deskontua" value="0" id="deskontua">
+            <input type="hidden" name="tot" value="0" id="tot">
+            <input class="botoia" type="submit">
         </form>
     </section>
     <footer>
