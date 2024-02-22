@@ -3,7 +3,7 @@
     // DATU BASEAREKIN KONEXIOA
 
    // Konexioa sortu
-$mysqli = new mysqli("localhost", "root", "", "db_zinema");
+$mysqli = new mysqli("localhost", "root", "", "db_e3zinema");
 
 // Konexioa egiaztatu
 if ($mysqli->connect_error) {
