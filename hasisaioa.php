@@ -20,9 +20,7 @@ if(isset($_POST['fname'])){
     // Prepare and execute the query
     $sql= "SELECT NAN FROM bezeroa WHERE erabiltzailea='$username' AND pasahitza ='$password'";
     $result = $mysqli->query($sql);
-
-    
-
+    $_SESSION['NAN'] = $result->fetch_assoc()['NAN'];
     // Retrieve data
     if($result->num_rows > 0){
         header("Location: tiketa.php?user=$username");

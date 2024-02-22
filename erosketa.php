@@ -78,17 +78,20 @@ session_start();
             return (kantitatea * prezioa) - (kantitatea * prezioa * deskontua);
         }
 
+        //TOFIX: Erosketa datuak sartu eta kentzean bug kendu
         function insert() {
+            console.log("insterta exekutatuko da");
+            window.alert("Erosketa burutu da");
+            // Jatorria = 1 -> Webgunea da. 0 -> App-a da
             <?php
-            $sql = "INSERT INTO erosketa (Jatorria, Deskontua, PrezioTot) VALUES ('1', '" . $_GET['deskontua'] . "', '" . $_GET['tot'] . "')";
+            $sql = "INSERT INTO erosketa (Jatorria, Deskontua, PrezioTot, NAN) VALUES ('1', '" . $_GET['deskontua'] . "', '" . $_GET['tot'] . "', '" . $_SESSION['NAN'] . "')";
             $mysqli = new mysqli("localhost", "root", "", "db_zinema");
             $result = $mysqli->query($sql);
             ?>
-            window.alert("Erosketa burutu da");
+            log("insterta exekutatu da");
         }
     </script>
 </head>
-
 
 <body onload="DatuakLortu()">
 
@@ -168,6 +171,28 @@ session_start();
         </div>
     </footer>
     <script>
+        function deskontua() {
+            var kantitatea = <?php echo $_GET['kopurua'] ?>;
+            var deskontua = 0;
+            if (kantitatea == 2) {
+                deskontua = 0.2;
+            } else if (kantitatea >= 3) {
+                deskontua = 0.3;
+            }
+            return deskontua;
+        }
+
+        function prezioTotala() {
+            var kantitatea = <?php echo $_GET['kopurua'] ?>;
+            var prezioa = 5;
+            var deskontua = 0;
+            if (kantitatea == 2) {
+                deskontua = 0.2;
+            } else if (kantitatea >= 3) {
+                deskontua = 0.3;
+            }
+            return (kantitatea * prezioa) - (kantitatea * prezioa * deskontua);
+        }
         document.getElementById('Deskontuak').innerHTML = 'Deskontua: ' + (deskontua() * 100) + '%';
         document.getElementById('Preziotot').innerHTML = 'Prezio totala: ' + prezioTotala() + '€';
     </script>
