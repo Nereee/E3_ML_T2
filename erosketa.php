@@ -78,7 +78,7 @@ session_start();
         </script>
         <p id="Deskontuak"></p>
         <p id="Preziotot"></p>
-        <input type="button" onclick="insert()" value="Erosi">
+        <input type="button"  class="custom-button" onclick="insert()" value="Erosi">
     </section>
     <footer>
         <div class="container3">

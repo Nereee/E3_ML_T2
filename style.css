@@ -481,7 +481,7 @@ section .menu img{
 .formularioaH {
   font-family: 'Nunito', sans-serif;
   width: 350px;
-  height: 340px;
+  /*height: 340px;*/
   background: rgb(2, 2, 95);
   margin: auto;
   margin-top: 100px;
@@ -501,9 +501,6 @@ section .menu img{
 .formularioaH h5 {
     margin: 0%;
     text-align: center;
-    height: 40px;
-    margin-bottom: 30px;
-    border-bottom: 1px solid;
     font-size: 20px;
     color:white
 }
@@ -534,9 +531,7 @@ section .menu img{
 
 /* "Ez dut pasahitza gogoratzen" itxura aldatzeko */
 .formularioaH p {
-    height: 40px;
     text-align: center;
-    border-bottom: 1px solid;
 }
 .formularioaH a {
     color: white;
@@ -545,4 +540,15 @@ section .menu img{
 }
 .formularioaH p:hover {
     text-decoration: underline;
+}
+
+.custom-button {
+    width: 100%;
+    height: 40px;
+    background:  rgb(43, 75, 255);
+    border: none;
+    color: rgb(255, 255, 255);
+    margin-bottom: 16px ;
+    font-weight: bold;
+    cursor: pointer;
 }
