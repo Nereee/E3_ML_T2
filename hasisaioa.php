@@ -3,7 +3,7 @@
     // DATU BASEAREKIN KONEXIOA
 
    // Konexioa sortu
-$mysqli = new mysqli("localhost", "root", "", "db_zinema");
+$mysqli = new mysqli("localhost", "root", "", "db_e3zinema");
 
 // Konexioa egiaztatu
 if ($mysqli->connect_error) {
@@ -20,9 +20,7 @@ if(isset($_POST['fname'])){
     // Prepare and execute the query
     $sql= "SELECT NAN FROM bezeroa WHERE erabiltzailea='$username' AND pasahitza ='$password'";
     $result = $mysqli->query($sql);
-
-    
-
+    $_SESSION['NAN'] = $result->fetch_assoc()['NAN'];
     // Retrieve data
     if($result->num_rows > 0){
         header("Location: tiketa.php?user=$username");
@@ -75,8 +73,6 @@ if(isset($_POST['fname'])){
                 <li><a href="komedia.html">Komedia</a></li>
                 <li><a href="erreserbak.html">Erreserbak</a></li>
                 <li><a href="hasisaioa.php">Hasi saioa </a></li>
-                <li><a href="#">Erregistratu</a></li>
-
             </ul>
         </div>
     </nav>

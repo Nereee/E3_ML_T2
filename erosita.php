@@ -1,5 +1,35 @@
 <?php
 session_start();
+    $deskontua = $_SESSION['Deskontuak'];
+    $tot = $_SESSION['Preziotot'];
+    $NAN = $_SESSION['NAN'];
+
+    $saioa = $_SESSION['Saioa'] ;
+    $idzinema = $_SESSION['IdZinema'] ;
+    $idfilma = $_SESSION['IdFilma'] ;
+    $data = $_SESSION['data'];
+
+
+    $mysqli = new mysqli("localhost", "root", "", "db_e3zinema");
+    $sql = "INSERT INTO erosketa (Jatorria, Deskontua, PrezioTot, NAN) VALUES ('1', '$deskontua', '$tot', '$NAN')";
+
+    $result = $mysqli->query($sql);
+
+    $sql2 = "select IdSaioa from saioa where IdZinema = $idzinema and IdFilma = $idfilma and Ordu_Data = '$saioa' and S_Data = '$data';";
+    $result2 = $mysqli->query($sql2);
+    $row2 = $result2->fetch_assoc();
+    $row2saioa = $row2['IdSaioa'];
+
+    $sql3 = "select max(iderosketa) as id from erosketa ;";
+    $result3 = $mysqli->query($sql3);
+    $row3 = $result3->fetch_assoc();
+    $row3erosketa = $row3['id'];
+    
+    
+    $sql4 = "INSERT INTO sarrera (IdSaioa, Prezioa, IdErosketa) VALUES ($row2saioa, $tot, $row3erosketa)";
+    $result4 = $mysqli->query($sql4);
+    
+    $mysqli->close();
 ?>
 
 <!DOCTYPE html>
@@ -49,27 +79,8 @@ session_start();
 
     <hr>
     <section class="formularioaH">
-        <form method="POST" action="erosita.php">
-            <h5>Tiketaren erosketa</h5>
-            <script>
-                <?php
-                $_SESSION['Preziotot'] = $_GET['tot'];
-                $_SESSION['Deskontuak'] = $_GET['deskontua'];
-                $_SESSION['Saioa'] = $_GET['saioa'];
-                $_SESSION['IdZinema'] = $_GET['zinemak'];
-                $_SESSION['IdFilma'] = $_GET['filma'];
-                if (isset($_SESSION['username'])) {
-                    echo "document.write('<h5>Kaixo: " . $_SESSION['username'] . ".</h5>');";
-                    echo "document.write('<p> " . $_SESSION['zinemaIzena'] . " zineman, " . $_SESSION['filmaIzena'] . " pelikula ikusiko duzu " . $_SESSION['data'] . " egunean " . $_GET['saioa'] . " orduan. " . $_GET['kopurua'] . " tiket erosiko da/dira.</p>');";
-                    echo "document.write('<p>Prezioa: 5€/tiket eta " . $_GET['kopurua'] . ".</p>');";
-                } else {
-                    echo "document.write('<h5>Error on load</h5>');";
-                }
-                ?>
-            </script>
-            <p id="Deskontuak"></p>
-            <p id="Preziotot"></p>
-            <input type="submit" class="custom-button" value="Erosi">
+        <form method="$_POST" >
+            <h5>Erosketa burutu da</h5>
         </form>
     </section>
     <footer>
@@ -102,10 +113,6 @@ session_start();
             </div>
         </div>
     </footer>
-    <script>
-        document.getElementById('Deskontuak').innerHTML = 'Deskontua: ' + (<?php echo $_GET['deskontua'] ?> * 100) + '%';
-        document.getElementById('Preziotot').innerHTML = 'Prezio totala: ' + <?php echo $_GET['tot'] ?> + '€';
-    </script>
 </body>
 
 </html>
