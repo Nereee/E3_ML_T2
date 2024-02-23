@@ -109,7 +109,6 @@ session_start();
                     }
                     if (isset($_GET['data'])) {
                         //Saioa ezarri
-                        //TOFIX: SaioaData eta SaioaOrdua funtzioak ez dute funtzionatzen datua ez lortzean
                     ?>
                         var saioa = document.getElementById("saioa");
                         document.getElementById("data").value = "<?php echo $_GET['data']; ?>";
@@ -140,40 +139,19 @@ session_start();
             document.getElementById("saioa").style.color = "black"
         }
 
-        function deskontua() {
-            var kantitatea = 0;
-            var deskontua = 0;
-            if (kantitatea == 2) {
-                deskontua = 0.2;
-            } else if (kantitatea >= 3) {
-                deskontua = 0.3;
-            }
-            return deskontua;
-        }
-
-        function prezioTotala() {
-            var kantitatea = 0;
-            var prezioa = 5;
-            var deskontua = 0;
-            if (kantitatea == 2) {
-                deskontua = 0.2;
-            } else if (kantitatea >= 3) {
-                deskontua = 0.3;
-            }
-            return (kantitatea * prezioa) - (kantitatea * prezioa * deskontua);
-        }
-
         function prezioa() {
-            var kantitatea = 0;
+            var kantitatea = document.getElementById("kopurua").value;
             var prezioa = 5;
             var deskontua = 0;
+            
             if (kantitatea == 2) {
                 deskontua = 0.2;
             } else if (kantitatea >= 3) {
                 deskontua = 0.3;
             }
+            
             document.getElementById("deskontua").value = deskontua;
-            document.getElementById("tot").value = (kantitatea * prezioa) - (kantitatea * prezioa * deskontua);
+            document.getElementById("tot").value = (kantitatea * prezioa * (1 - deskontua));
         }
     </script>
 </head>
@@ -202,8 +180,6 @@ session_start();
                 <li><a href="komedia.html">Komedia</a></li>
                 <li><a href="erreserbak.html">Erreserbak</a></li>
                 <li><a href="hasisaioa.php">Hasi saioa </a></li>
-                <li><a href="#">Erregistratu</a></li>
-
             </ul>
         </div>
     </nav>
@@ -229,7 +205,7 @@ session_start();
             </select>
             <br>
             <label for="saioa">Aukeratu saioa:</label>
-            <select name="saioa" id="saioa" >
+            <select name="saioa" id="saioa">
                 <option value="0" style="color: black">-</option>
             </select>
             <br>
