@@ -148,6 +148,7 @@ session_start();
                 }
             }
             ?>
+            document.getElementById("saioa").style.color = "black"
         }
 
         function deskontua() {
@@ -239,7 +240,7 @@ session_start();
             </select>
             <br>
             <label for="saioa">Aukeratu saioa:</label>
-            <select name="saioa" id="saioa" onchange="SaioaURL()">
+            <select name="saioa" id="saioa" >
                 <option value="0" style="color: black">-</option>
             </select>
             <br>
