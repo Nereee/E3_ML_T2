@@ -20,7 +20,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
-<body onload="DatuakLortu()">
+<body>
 
     <header>
         <div class="container">
@@ -42,8 +42,6 @@ session_start();
                 <li><a href="komedia.html">Komedia</a></li>
                 <li><a href="erreserbak.html">Erreserbak</a></li>
                 <li><a href="hasisaioa.php">Hasi saioa </a></li>
-                <li><a href="#">Erregistratu</a></li>
-
             </ul>
         </div>
     </nav>
@@ -54,16 +52,18 @@ session_start();
         <h5>Tiketaren erosketa</h5>
         <script>
             function insert() {
-                console.log("insterta exekutatuko da");
-                window.alert("Erosketa burutu da");
                 // Jatorria = 1 -> Webgunea da. 0 -> App-a da
                 <?php
-                $sql = "INSERT INTO erosketa (Jatorria, Deskontua, PrezioTot, NAN) VALUES ('1', '" . $_GET['deskontua'] . "', '" . $_GET['tot'] . "', '" . $_SESSION['NAN'] . "')";
+                $deskontua = $_GET['deskontua'];
+                $tot = $_GET['tot'];
+                $NAN = $_SESSION['NAN'];
+
                 $mysqli = new mysqli("localhost", "root", "", "db_e3zinema");
+                $sql = "INSERT INTO erosketa (Jatorria, Deskontua, PrezioTot, NAN) VALUES ('1', '$deskontua', '$tot', '$NAN')";
                 $result = $mysqli->query($sql);
+                $mysqli->close();
                 ?>
-                log("insterta exekutatu da");
-            }
+            } 
 
 
             <?php

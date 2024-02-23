@@ -73,8 +73,6 @@ if(isset($_POST['fname'])){
                 <li><a href="komedia.html">Komedia</a></li>
                 <li><a href="erreserbak.html">Erreserbak</a></li>
                 <li><a href="hasisaioa.php">Hasi saioa </a></li>
-                <li><a href="#">Erregistratu</a></li>
-
             </ul>
         </div>
     </nav>

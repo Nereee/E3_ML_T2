@@ -150,107 +150,82 @@ session_start();
             ?>
         }
 
-        function deskontua() {
-            var kantitatea = 0;
-            var deskontua = 0;
-            if (kantitatea == 2) {
-                deskontua = 0.2;
-            } else if (kantitatea >= 3) {
-                deskontua = 0.3;
-            }
-            return deskontua;
-        }
-
-        function prezioTotala() {
-            var kantitatea = 0;
-            var prezioa = 5;
-            var deskontua = 0;
-            if (kantitatea == 2) {
-                deskontua = 0.2;
-            } else if (kantitatea >= 3) {
-                deskontua = 0.3;
-            }
-            return (kantitatea * prezioa) - (kantitatea * prezioa * deskontua);
-        }
-
-        function prezioa() {
-            var kantitatea = 0;
-            var prezioa = 5;
-            var deskontua = 0;
-            if (kantitatea == 2) {
-                deskontua = 0.2;
-            } else if (kantitatea >= 3) {
-                deskontua = 0.3;
-            }
-            document.getElementById("deskontua").value = deskontua;
-            document.getElementById("tot").value = (kantitatea * prezioa) - (kantitatea * prezioa * deskontua);
-        }
-    </script>
-</head>
+                function prezioa() {
+                    var kantitatea = document.getElementById("kopurua").value;
+                    var prezioa = 5;
+                    var deskontua = 0;
+                    if (kantitatea == 2) {
+                        deskontua = 0.2;
+                    } else if (kantitatea >= 3) {
+                        deskontua = 0.3;
+                    }
+                    document.getElementById("deskontua").value = deskontua;
+                    document.getElementById("tot").value = (kantitatea * prezioa * (1 - deskontua));
+                }
+            </script>
+        </head>
 
 
-<body onload="ZinemaIzena()">
-    <header>
-        <div class="container">
-            <div class="logo">
-                <img src="logo.png" alt="logoa">
-            </div>
-        </div>
-    </header>
+        <body onload="ZinemaIzena()">
+            <header>
+                <div class="container">
+                    <div class="logo">
+                        <img src="logo.png" alt="logoa">
+                    </div>
+                </div>
+            </header>
 
 
-    <hr>
+            <hr>
 
 
-    <nav>
-        <div class="nabegaziobarra">
-            <ul>
-                <li><a href="index.html">Hasiera</a></li>
-                <li><a href="drama.html">Drama</a></li>
-                <li><a href="beldurra.html">Beldurra</a></li>
-                <li><a href="zientziafikzioa.html">Zientzia Fikzioa</a></li>
-                <li><a href="komedia.html">Komedia</a></li>
-                <li><a href="erreserbak.html">Erreserbak</a></li>
-                <li><a href="hasisaioa.php">Hasi saioa </a></li>
-                <li><a href="#">Erregistratu</a></li>
-
-            </ul>
-        </div>
-    </nav>
+            <nav>
+                <div class="nabegaziobarra">
+                    <ul>
+                        <li><a href="index.html">Hasiera</a></li>
+                        <li><a href="drama.html">Drama</a></li>
+                        <li><a href="beldurra.html">Beldurra</a></li>
+                        <li><a href="zientziafikzioa.html">Zientzia Fikzioa</a></li>
+                        <li><a href="komedia.html">Komedia</a></li>
+                        <li><a href="erreserbak.html">Erreserbak</a></li>
+                        <li><a href="hasisaioa.php">Hasi saioa </a></li>
+                    </ul>
+                </div>
+            </nav>
 
 
-    <hr>
-    <section class="formularioaH">
-        <h5>Tiketaren erosketa</h5>
-        <form id="botoia" action="erosketa.php" method="get">
-            <label for="zinemak">Aukeratu zinema:</label>
-            <select name="zinemak" id="zinemak" onchange="ZinemaUrl()">
-                <option value="0" style="color: black">-</option>
-            </select>
-            <br>
-            <label for="filma">Aukeratu filma:</label>
-            <select name="filma" id="filma" onchange="FilmaUrl()">
-                <option value="0" style="color: black">-</option>
-            </select>
-            <br>
-            <label for="data">Aukeratu data:</label>
-            <select id="data" name="data" onchange="DataUrl()">
-                <option value="0" style="color: black">-</option>
-            </select>
-            <br>
-            <label for="saioa">Aukeratu saioa:</label>
-            <select name="saioa" id="saioa" onchange="SaioaURL()">
-                <option value="0" style="color: black">-</option>
-            </select>
-            <br>
-            <label for="kopurua">Sartu kopurua:</label>
-            <input type="number" id="kopurua" name="kopurua" min="1" value="0" style="color: black" onchange="prezioa()">
-            <br><br>
-            <input type="hidden" name="deskontua" value="0" id="deskontua">
-            <input type="hidden" name="tot" value="0" id="tot">
-            <input class="botoia" type="submit">
-        </form>
-    </section>
+            <hr>
+            <section class="formularioaH">
+                <h5>Tiketaren erosketa</h5>
+                <form id="botoia" action="erosketa.php" method="get">
+                    <label for="zinemak">Aukeratu zinema:</label>
+                    <select name="zinemak" id="zinemak" onchange="ZinemaUrl()">
+                        <option value="0" style="color: black">-</option>
+                    </select>
+                    <br>
+                    <label for="filma">Aukeratu filma:</label>
+                    <select name="filma" id="filma" onchange="FilmaUrl()">
+                        <option value="0" style="color: black">-</option>
+                    </select>
+                    <br>
+                    <label for="data">Aukeratu data:</label>
+                    <select id="data" name="data" onchange="DataUrl()">
+                        <option value="0" style="color: black">-</option>
+                    </select>
+                    <br>
+                    <label for="saioa">Aukeratu saioa:</label>
+                    <select name="saioa" id="saioa" onchange="SaioaURL()">
+                        <option value="0" style="color: black">-</option>
+                    </select>
+                    <br>
+                    <label for="kopurua">Sartu kopurua:</label>
+                    <input type="number" id="kopurua" name="kopurua" min="1" value="0" style="color: black" onchange="prezioa()">
+                    <br><br>
+                    <input type="hidden" name="deskontua" value="0" id="deskontua">
+                    <input type="hidden" name="tot" value="0" id="tot">
+                    <input class="botoia" type="submit">
+                </form>
+            </section>
     <footer>
         <div class="container3">
             <div class="info-footer">
