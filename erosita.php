@@ -1,12 +1,34 @@
 <?php
 session_start();
-    $deskontua = $_SESSION['deskontua'];
+    $deskontua = $_SESSION['Deskontuak'];
     $tot = $_SESSION['Preziotot'];
     $NAN = $_SESSION['NAN'];
 
+    $saioa = $_SESSION['Saioa'] ;
+    $idzinema = $_SESSION['IdZinema'] ;
+    $idfilma = $_SESSION['IdFilma'] ;
+    $data = $_SESSION['data'];
+
+
     $mysqli = new mysqli("localhost", "root", "", "db_e3zinema");
     $sql = "INSERT INTO erosketa (Jatorria, Deskontua, PrezioTot, NAN) VALUES ('1', '$deskontua', '$tot', '$NAN')";
+
     $result = $mysqli->query($sql);
+
+    $sql2 = "select IdSaioa from saioa where IdZinema = $idzinema and IdFilma = $idfilma and Ordu_Data = '$saioa' and S_Data = '$data';";
+    $result2 = $mysqli->query($sql2);
+    $row2 = $result2->fetch_assoc();
+    $row2saioa = $row2['IdSaioa'];
+
+    $sql3 = "select max(iderosketa) as id from erosketa ;";
+    $result3 = $mysqli->query($sql3);
+    $row3 = $result3->fetch_assoc();
+    $row3erosketa = $row3['id'];
+    
+    
+    $sql4 = "INSERT INTO sarrera (IdSaioa, Prezioa, IdErosketa) VALUES ($row2saioa, $tot, $row3erosketa)";
+    $result4 = $mysqli->query($sql4);
+    
     $mysqli->close();
 ?>
 

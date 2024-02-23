@@ -49,12 +49,15 @@ session_start();
 
     <hr>
     <section class="formularioaH">
-        <form method="$_POST" action="erosita.php">
+        <form method="POST" action="erosita.php">
             <h5>Tiketaren erosketa</h5>
             <script>
                 <?php
                 $_SESSION['Preziotot'] = $_GET['tot'];
                 $_SESSION['Deskontuak'] = $_GET['deskontua'];
+                $_SESSION['Saioa'] = $_GET['saioa'];
+                $_SESSION['IdZinema'] = $_GET['zinemak'];
+                $_SESSION['IdFilma'] = $_GET['filma'];
                 if (isset($_SESSION['username'])) {
                     echo "document.write('<h5>Kaixo: " . $_SESSION['username'] . ".</h5>');";
                     echo "document.write('<p> " . $_SESSION['zinemaIzena'] . " zineman, " . $_SESSION['filmaIzena'] . " pelikula ikusiko duzu " . $_SESSION['data'] . " egunean " . $_GET['saioa'] . " orduan. " . $_GET['kopurua'] . " tiket erosiko da/dira.</p>');";
@@ -66,7 +69,7 @@ session_start();
             </script>
             <p id="Deskontuak"></p>
             <p id="Preziotot"></p>
-            <input type="sumbit" class="custom-button" value="Erosi">
+            <input type="submit" class="custom-button" value="Erosi">
         </form>
     </section>
     <footer>
