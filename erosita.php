@@ -22,7 +22,7 @@ session_start();
 
     $sql3 = "select max(iderosketa) as id from erosketa ;";
     $result3 = $mysqli->query($sql3);
-    $row3 = $result3->fetch_assoc();
+    $row3 = $result3->fetch_assoc(); // cada tabla
     $row3erosketa = $row3['id'];
     
     
